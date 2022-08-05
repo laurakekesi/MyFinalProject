@@ -1,6 +1,6 @@
-import { v4 as uuidv4 } from 'uuid';
+const {v4:uuidv4 } = require("uuid");
 
-export const allPosts = [
+const allPosts = [
     {
         postId : uuidv4(),
         userId: "414ZsoltKekesi",
@@ -72,3 +72,5 @@ export const allPosts = [
         numPoos: 2,
     },
 ]
+
+module.exports = {allPosts};
