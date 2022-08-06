@@ -6,9 +6,12 @@ export default createGlobalStyle`
    License: none (public domain)
 */
 
-:root{
---background-image-url: "https://img.freepik.com/free-vector/background-seamless-pattern-vector-with-cute-memphis_53876-105506.jpg?w=1480&t=st=1659814790~exp=1659815390~hmac=d053e59b650a27d3e92348fd2bff20febadb65aff578b8e4aa9c15fb82ce3145";
+:root {
+    --pale-yellow: #FEE481;
+    --header-font-family: 'Mouse Memoirs', sans-serif;
+    --secondary-font-family: 'Signika Negative', sans-serif;
 }
+
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,

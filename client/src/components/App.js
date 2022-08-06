@@ -8,8 +8,8 @@ const App = () => {
    
     <BrowserRouter>
     <GlobalStyles/>
-    <Navbar/>
     <Wrapper>
+    <Navbar/>
       <Switch>
         <Route exact path = '/'>
           Homepage
