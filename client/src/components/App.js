@@ -2,6 +2,7 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import GlobalStyles from "../styles/GlobalStyles";
 import Navbar from "./Navbar";
 import styled from "styled-components";
+import Homefeed from "./Homefeed";
 
 const App = () => {
   return (
@@ -12,7 +13,7 @@ const App = () => {
     <Navbar/>
       <Switch>
         <Route exact path = '/'>
-          Homepage
+          <Homefeed/>
         </Route>
         <Route exact path = '/profile/:profileId'>
           Profile page

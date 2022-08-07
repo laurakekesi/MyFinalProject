@@ -28,7 +28,7 @@ express()
     next();
   })
 
- //Auth0 configuration data  //***** NOT DONE ******/
+//  Auth0 configuration data  //***** NOT DONE ******/
   .use(
     auth({
       issuerBaseURL: ISSUER_BASE_URL,
