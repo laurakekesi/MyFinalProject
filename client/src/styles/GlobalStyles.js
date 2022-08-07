@@ -8,6 +8,10 @@ export default createGlobalStyle`
 
 :root {
     --pale-yellow: #FEE481;
+	--light-pink: #FED6C9;
+	--light-teal: #ACD8D2;
+	--off-white: #FCF6F2;
+	--orangey-yellow: #FFCC0E;
     --header-font-family: 'Mouse Memoirs', sans-serif;
     --secondary-font-family: 'Signika Negative', sans-serif;
 }

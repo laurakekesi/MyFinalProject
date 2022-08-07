@@ -3,6 +3,7 @@ import GlobalStyles from "../styles/GlobalStyles";
 import Navbar from "./Navbar";
 import styled from "styled-components";
 import Homefeed from "./Homefeed";
+import GamePlay from "./GamePlay";
 
 const App = () => {
   return (
@@ -15,11 +16,11 @@ const App = () => {
         <Route exact path = '/'>
           <Homefeed/>
         </Route>
-        <Route exact path = '/profile/:profileId'>
+        <Route path = '/profile/:profileId'>
           Profile page
         </Route>
-        <Route exact path = '/play'>
-          Quiz page
+        <Route path = '/play'>
+          <GamePlay/>
         </Route>
       </Switch>
     </Wrapper>

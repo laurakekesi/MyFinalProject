@@ -36,6 +36,7 @@ express()
       clientID: CLIENT_ID,
       secret: SECRET,
       idpLogout: true,
+      authRequired: false
     })
   )
 
