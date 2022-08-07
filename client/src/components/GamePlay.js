@@ -37,6 +37,13 @@ const createAnswersArray = () => {
 
 const shuffledAnswers = createAnswersArray();
 const correctAnswer = fetch.correctAnswer;
+//set timeout, after 15 seconds, if no answer is selected, points = 0
+//else
+//create a function where on click, 
+// 1) if correct answer, give points, else 0 points
+// push points to points tally (array?)
+// change border colours to red or green
+//either way, after 15 seconds, move on to next question.
 
     return(
         <Wrapper>
@@ -52,11 +59,11 @@ const correctAnswer = fetch.correctAnswer;
                         {shuffledAnswers.map((answer)=>{
                             return(
                                 (answer===correctAnswer)? 
-                                <CorrectAnswer>
+                                <CorrectAnswer value={answer}>
                                     {answer}
                                 </CorrectAnswer>
                             :
-                                <IncorrectAnswer>
+                                <IncorrectAnswer value={answer}>
                                     {answer}
                                 </IncorrectAnswer>
                             )
