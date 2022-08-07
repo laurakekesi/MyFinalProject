@@ -9,6 +9,7 @@ export default createGlobalStyle`
 :root {
     --pale-yellow: #FEE481;
 	--light-pink: #FED6C9;
+	--pink: #FF7D9E;
 	--light-teal: #ACD8D2;
 	--off-white: #FCF6F2;
 	--orangey-yellow: #FFCC0E;

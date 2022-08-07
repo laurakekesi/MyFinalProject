@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import TimerBar from "./TimerBar";
 
 const GamePlay = () => {
-const fetch =   {
+const fetch =  {
     "category": "General Knowledge",
     "id": "622a1c357cc59eab6f94fc94",
     "correctAnswer": "Blatherskite",
@@ -36,26 +37,30 @@ const createAnswersArray = () => {
 
 const shuffledAnswers = createAnswersArray();
 const correctAnswer = fetch.correctAnswer;
+// const questionIndex = 
 
 
     return(
         <Wrapper>
             <BackgroundDiv>
                 <GameDiv>
+                    <TimerDiv>
+                        <TimerBar/>
+                    </TimerDiv>
                     <QuestionDiv>
-                        {fetch.question};
+                        {fetch.question}
                     </QuestionDiv>
                     <AnswersDiv>
                         {shuffledAnswers.map((answer)=>{
                             return(
                                 (answer===correctAnswer)? 
-                                <IncorrectAnswer>
-                                    {answer}
-                                </IncorrectAnswer>
-                            :
                                 <CorrectAnswer>
                                     {answer}
                                 </CorrectAnswer>
+                            :
+                                <IncorrectAnswer>
+                                    {answer}
+                                </IncorrectAnswer>
                             )
                         })}
                     </AnswersDiv>
@@ -65,35 +70,49 @@ const correctAnswer = fetch.correctAnswer;
     )
 }
 
-
-const IncorrectAnswer = styled.div`
-border: 2px green solid;
-display: flex;
-justify-content: center;
+const TimerDiv = styled.div`
+height: 15%;
+display: flex; 
 align-items: center;
-height: 40%;
-width: 40%;
 `
-const CorrectAnswer = styled.div`
-border: black 1px solid;
+const IncorrectAnswer = styled.button`
 display: flex;
 justify-content: center;
 align-items: center;
 height: 40%;
-width: 40%;
+width: 45%;
+border-radius: 10px;
+background: rgba(255,255,255,0.5);
+border: var(--orangey-yellow) 4px solid;
+font-family: var(--secondary-font-family);
+font-size: 25px;
+cursor: pointer;
+`
+const CorrectAnswer = styled.button`
+display: flex;
+justify-content: center;
+align-items: center;
+height: 40%;
+width: 45%;
+border-radius: 10px;
+/* background: rgba(255,255,255,0.5); */
+background: pink;
+border: var(--orangey-yellow) 4px solid;
+cursor: pointer;
+font-family: var(--secondary-font-family);
+font-size: 25px;
 `
 const QuestionDiv = styled.div`
 height: 30%;
-margin-bottom: 5%;
 border-radius: 10px;
-background: #FCF6F2;
+background: rgba(255,255,255,0.5);
 border: var(--orangey-yellow) 4px solid;
 display: flex;
 justify-content: center;
 align-items: center;
+font-size: 25px;
 `
 const AnswersDiv = styled.div`
-border: black solid 1px;
 height: 50%;
 column-count: 2;
 display: flex;
@@ -106,6 +125,7 @@ gap: 15px;
 const GameDiv = styled.div`
 width: 85%;
 height: 90%;
+font-family: var(--secondary-font-family);
 `
 const BackgroundDiv = styled.div`
 width: 85%;
