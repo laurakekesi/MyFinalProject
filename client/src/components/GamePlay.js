@@ -37,8 +37,6 @@ const createAnswersArray = () => {
 
 const shuffledAnswers = createAnswersArray();
 const correctAnswer = fetch.correctAnswer;
-// const questionIndex = 
-
 
     return(
         <Wrapper>
