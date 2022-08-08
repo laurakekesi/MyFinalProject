@@ -30,53 +30,56 @@ const getUserById = async (req, res) => {
   client.close();
 }
 
-// const patchStock = async(req,res)=>{
-//   const client = new MongoClient(MONGO_URI, options);
+const updateHighScore = async (req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+  try {
+      client.connect();
+      const db = client.db("myFinalProject");
+      const _id = req.params.userId;
+      const query = {_id: ObjectId(_id)};
+      const newHighScore = req.body.highScore;
+      let newValues;
+      const postToUpdate = await db.collection("users_data").findOne({_id: ObjectId(_id)});
+      if (postToUpdate) {
+          newValues = { $set: {highScore: newHighScore} };
+      }
+      const updatedPost = await db.collection("users_data").updateOne(query, newValues);
+      updatedPost.modifiedCount === 1?
+      res.status(200).json({status: 200, data: updatedPost ,message: "High score updated!"})
+      : res.status(404).json({status: 404, data: updatedPost ,message: "High score not updated."})
+  }
+  catch {
+      res.status(500).json({status: 500, message: "Server error!"});
+  }
+}
 
-//   await client.connect();
-//   const db = client.db("groupProject");
-//   const stockNum = req.body
-
-//   const numInStock = await db.collection("all_items").findOneAndUpdate({_id:_id},{$inc:{numInStock:-{quantity}}},{returnNewDocument:true})
-//   numInStock>0
-//     ? res
-//         .status(200)
-//         .json({
-//           status: 200,
-//           data: numInStock,
-//           message: "numInstock reduce success!",
-//         })
-//     : res.status(404).json({ status: 404, message: "stock not enough!" });
-// client.close();
-
-// }
-
-const updateUserInfo = async(req, res) => {
-  // const client = new MongoClient(MONGO_URI, options);
-  // await client.connect();
-  // const db = client.db("myFinalProject");
-  // const _id = req.params.userId;
-  // const updatedHearts = req.body.numHearts;
-  // const updatedPoos = req.body.numPoos;
-  // if (updatedHearts) {
-  // const updatePostHearts = await db.collection("users_data").findOneAndUpdate({_id: _id}, {$set:{numHearts: updatedHearts}})
-  // updatePostHearts?
-  // res.status(200).json({status: 200, data: updatePostHearts, message: `New number of hearts: ${updatedHearts}`})
-  // : res.status(404).json({status: 404, message: "Hearts not updated </3."})
-  // } else if (updatedPoos) {
-  // const updatePostPoos = await db.collection("users_data").findOneAndUpdate({_id: _id}, {$set:{numPoos: updatedPoos}})
-  // updatePostPoos?
-  // res.status(200).json({status: 200, data: updatePostHearts, message: `New number of hearts: ${updatedPoos}`})
-  // : res.status(404).json({status: 404, message: "Poos not updated"})
-  // } else {
-  //   res.status(404).json({status: 404, message: "Update unsuccessful."})
-  // }
-  // client.close();
+const updateBestSubject = async(req, res) => {
+  const client = new MongoClient(MONGO_URI, options);
+  try {
+      client.connect();
+      const db = client.db("myFinalProject");
+      const _id = req.params.userId;
+      const query = {_id: ObjectId(_id)};
+      const newBestSubject = req.body.bestSubject;
+      let newValues;
+      const postToUpdate = await db.collection("users_data").findOne({_id: ObjectId(_id)});
+      if (postToUpdate) {
+          newValues = { $set: {bestSubject: newBestSubject} };
+      }
+      const updatedPost = await db.collection("users_data").updateOne(query, newValues);
+      updatedPost.modifiedCount === 1?
+      res.status(200).json({status: 200, data: updatedPost ,message: "Best subject updated!"})
+      : res.status(404).json({status: 404, data: updatedPost ,message: "Best subject not updated."})
+  }
+  catch {
+      res.status(500).json({status: 500, message: "Server error!"});
+  }
 }
 
 
 module.exports = {
   getUsers,
   getUserById,
-  updateUserInfo
+  updateHighScore,
+  updateBestSubject
 };

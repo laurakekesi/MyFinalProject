@@ -2,8 +2,21 @@ const express = require('express');
 const morgan = require('morgan');
 require("dotenv").config();
 
-const { getUsers, getUserById} = require("./userHandlers");
-const { getPosts, getPostById, getPostsByUserId, deletePostById, createNewPost, updatePostStats } = require("./postHandlers");
+const { getUsers, 
+  getUserById,
+  updateHighScore,
+  updateBestSubject
+} = require("./userHandlers");
+const { getPosts, 
+  getPostById, 
+  getPostsByUserId, 
+  deletePostById, 
+  createNewPost, 
+  incrementHearts,
+  decrementHearts,
+  incrementPoos,
+  decrementPoos
+ } = require("./postHandlers");
 const { getTriviaQuestions } = require("./apiHandlers")
 
 const PORT = 8000;
@@ -40,24 +53,25 @@ express()
 //User endpoints
 .get('/api/users', getUsers) //gets an array of all user objects
 .get('/api/user/:userId', getUserById) //gets specific user object by id
+.patch('/api/highScore/:userId', updateHighScore) //updates user's high score.
+.patch('/api/bestSubject/:userId', updateBestSubject) //updates user's top subject.
 
-//***** NOT DONE ******/
-// .patch('/api/user/:userId',) //updates high score and/or top subject.
-
-// //Post endpoints
+//Post endpoints
 .get('/api/posts', getPosts)//gets all posts
 .get('/api/post/:postId', getPostById) //?Do i need?
 .get('/api/posts/user/:userId', getPostsByUserId) //gets all posts from specific user id.
 .post('/api/posts', createNewPost) //creates a new post
 .delete('/api/post/:postId', deletePostById) //deletes a specific post from feed
+.patch('/api/post/incrementHearts/:postId', incrementHearts) //increments post hearts
+.patch('/api/post/decrementHearts/:postId', decrementHearts) // decrements post hearts
+.patch('/api/post/incrementPoos/:postId', incrementPoos) //increments post poos
+.patch('/api/post/decrementPoos/:postId', decrementPoos) //decrements post poos
 
-//***** NOT DONE ******/
-.patch('/api/post/:postId', updatePostStats) //updates post stats (hearts and/or poos) *****HELP
 
 // //Trivia endpoint
 .get('/triviaQuestions', getTriviaQuestions) //gets 20 random question from (https://the-trivia-api.com/)
 
-// //Auth0 endpoint
+// //Auth0 endpoint?
 
 
 .listen(PORT, () => {
