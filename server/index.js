@@ -1,17 +1,12 @@
 const express = require('express');
 const morgan = require('morgan');
 require("dotenv").config();
-const { auth } = require('express-openid-connect');
-const { ISSUER_BASE_URL, BASE_URL, CLIENT_ID, SECRET} = process.env;
-
 
 const { getUsers, getUserById} = require("./userHandlers");
 const { getPosts, getPostById, getPostsByUserId, deletePostById, createNewPost, updatePostStats } = require("./postHandlers");
 const { getTriviaQuestions } = require("./apiHandlers")
 
 const PORT = 8000;
-
-
 
 
 express()
@@ -29,16 +24,7 @@ express()
   })
 
 //  Auth0 configuration data  //***** NOT DONE ******/
-  .use(
-    auth({
-      issuerBaseURL: ISSUER_BASE_URL,
-      baseURL: BASE_URL,
-      clientID: CLIENT_ID,
-      secret: SECRET,
-      idpLogout: true,
-      authRequired: false
-    })
-  )
+
 
     .use(morgan("tiny"))
     .use(express.static("public"))
