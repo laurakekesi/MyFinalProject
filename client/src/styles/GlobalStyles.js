@@ -15,6 +15,7 @@ export default createGlobalStyle`
 	--orangey-yellow: #FFCC0E;
     --header-font-family: 'Mouse Memoirs', sans-serif;
     --secondary-font-family: 'Signika Negative', sans-serif;
+	--test-font: 'Oleo Script Swash Caps', cursive;
 }
 
 

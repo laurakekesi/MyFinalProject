@@ -26,7 +26,7 @@ height: 45px;
 const Links = styled(NavLink)`
 color: white;
 text-decoration: none;
-font-family: var(--header-font-family);
+font-family: var(--test-font);
 font-size: 40px;
 `
 const Wrapper = styled.div`
