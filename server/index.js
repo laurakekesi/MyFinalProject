@@ -69,7 +69,7 @@ express()
 
 
 // //Trivia endpoint
-.get('/triviaQuestions', getTriviaQuestions) //gets 20 random question from (https://the-trivia-api.com/)
+.get('/api/triviaQuestions', getTriviaQuestions) //gets 20 random question from (https://the-trivia-api.com/)
 
 // //Auth0 endpoint?
 

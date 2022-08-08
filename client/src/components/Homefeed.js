@@ -1,13 +1,15 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import styled from "styled-components";
+import { Context } from "../context/Context";
 import UserPost from "./UserPost";
 
 
 
 const Homefeed = () => {
 
-    //fetch all posts in context
-    //import here
+    const {allPosts} = useContext(Context);
+
+    if (allPosts){
     return(
         <Wrapper>
             <BackgroundDiv>
@@ -21,10 +23,20 @@ const Homefeed = () => {
                 </Form>
 
         {/* map over all posts, pass down post.postId as prop */}
-        <UserPost postId={"123"}/>
+        {allPosts.map((post) => {
+            return (
+                <UserPost postId={post._id}/>
+            )
+        })}
+        
             </BackgroundDiv>
         </Wrapper>
-    )
+    )}
+    else {
+        return(
+            <div>Loading...</div>
+        )
+    }
 }
 const Button = styled.button`
 width: 80px;

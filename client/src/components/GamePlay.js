@@ -1,8 +1,23 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import TimerBar from "./TimerBar";
 
 const GamePlay = () => {
-const fetch =  {
+
+const [triviaQuestions, setTriviaQuestions] = useState(null);
+
+    useEffect(() => {
+        fetch('/api/triviaQuestions')
+        .then((res) => res.json())
+        .then((data) => {
+            setTriviaQuestions(data.data);
+        })
+        .catch((err) => console.log("err", err))
+    }, [])
+
+
+
+const notFetch =  {
     "category": "General Knowledge",
     "id": "622a1c357cc59eab6f94fc94",
     "correctAnswer": "Blatherskite",
@@ -21,13 +36,13 @@ const fetch =  {
     "regions": []
   }
 
-//map over the whole fetched quesstion array, do this for each item. 
+//map over the whole notFetched quesstion array, do this for each item. 
 
   //creates an array consisting of the 3 incorrect answers and the 1 correct answer.
-const createAnswersArray = () => {
+const createAnswersArray = (object) => {
     let answersArray = [];
-    answersArray.push(fetch.correctAnswer);
-    fetch.incorrectAnswers.map((answer) => answersArray.push(answer))
+    answersArray.push(notFetch.correctAnswer);
+    notFetch.incorrectAnswers.map((answer) => answersArray.push(answer))
     // return answersArray;
     const shuffled = answersArray.sort(()=>{
         return Math.random() - 0.5;
@@ -36,7 +51,7 @@ const createAnswersArray = () => {
 }
 
 const shuffledAnswers = createAnswersArray();
-const correctAnswer = fetch.correctAnswer;
+const correctAnswer = notFetch.correctAnswer;
 //set timeout, after 15 seconds, if no answer is selected, points = 0
 //else
 //create a function where on click, 
@@ -54,7 +69,7 @@ const correctAnswer = fetch.correctAnswer;
                     </TimerDiv>
                     <QuestionDiv>
                         <QuestionIndex>1/20</QuestionIndex>
-                        <div>{fetch.question}</div>
+                        <div>{notFetch.question}</div>
                     </QuestionDiv>
                     <AnswersDiv>
                         {shuffledAnswers.map((answer)=>{
