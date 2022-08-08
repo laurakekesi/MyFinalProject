@@ -53,7 +53,8 @@ const correctAnswer = fetch.correctAnswer;
                         <TimerBar/>
                     </TimerDiv>
                     <QuestionDiv>
-                        {fetch.question}
+                        <QuestionIndex>1/20</QuestionIndex>
+                        <div>{fetch.question}</div>
                     </QuestionDiv>
                     <AnswersDiv>
                         {shuffledAnswers.map((answer)=>{
@@ -74,6 +75,11 @@ const correctAnswer = fetch.correctAnswer;
         </Wrapper>
     )
 }
+const QuestionIndex = styled.div`
+font-family: var(--header-font-family);
+font-size: 30px;
+margin-bottom: 10px;
+`
 
 const TimerDiv = styled.div`
 height: 15%;
@@ -113,6 +119,7 @@ border-radius: 10px;
 background: rgba(255,255,255,0.5);
 border: var(--orangey-yellow) 4px solid;
 display: flex;
+flex-direction: column;
 justify-content: center;
 align-items: center;
 font-size: 25px;
@@ -146,5 +153,8 @@ display: flex;
 justify-content: center;
 align-items: center;
 height: 90%;
+
+/* added in because of navbar stuff */
+padding-top: 70px;
 `
 export default GamePlay;
