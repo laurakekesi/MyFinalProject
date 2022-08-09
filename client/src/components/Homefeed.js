@@ -21,11 +21,13 @@ const Homefeed = () => {
                     <iframe src="https://giphy.com/embed/AXHkWhNemfGjGjoG1p" width="70" height="70" ></iframe>
                     </Button>
                 </Form>
-
+        
         {/* map over all posts, pass down post.postId as prop */}
         {allPosts.map((post) => {
             return (
-                <UserPost postId={post._id}/>
+                <div>
+                <UserPost postid={post._id}/>
+                </div>
             )
         })}
         
@@ -34,7 +36,7 @@ const Homefeed = () => {
     )}
     else {
         return(
-            <div>Loading...</div>
+            <div>Loading</div>
         )
     }
 }
