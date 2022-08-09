@@ -21,6 +21,7 @@ const GamePlay = () => {
 
 
   useEffect(() => {
+      
     setGameState("play");
     setTimeout(() => {
       setGameState("result");
@@ -73,7 +74,7 @@ const GamePlay = () => {
               <TimerBar />
             </TimerDiv>
             <QuestionDiv>
-              <QuestionIndex>1/20</QuestionIndex>
+              <QuestionIndex>{triviaIndex + 1}/20</QuestionIndex>
               <div>{currentQuestion.question}</div>
             </QuestionDiv>
             <AnswersDiv>
