@@ -13,8 +13,9 @@ const UserPost = ({postid}) => {
   
 
     if (allPosts && allUsers){
-    const post = allPosts.filter((post) => post._id === postid);
+    const findPost = allPosts.filter((post) => post._id === postid);
     const postIndex = allPosts.findIndex((post) => post._id === postid);
+    const post = allPosts[postIndex];
     const userId = allPosts[postIndex].userId;
     const userObject = allUsers.filter((user) => user._id === userId);
     const userIndex = allUsers.findIndex((user) => user._id === userId);
@@ -47,12 +48,83 @@ const UserPost = ({postid}) => {
     //heart and poo bar, updates post stats
 
     return(
-        <>
-        <div>{user.firstName}</div>
-        </>
+        <Wrapper>
+
+            <PersonInfo>
+                <Img src = {user.avatarSrc} alt="avatar"/>
+                <Column>
+                    <Name><Bold>{user.firstName}</Bold> says:</Name>
+                    <Post>{post.postContent}</Post>
+                </Column>
+            </PersonInfo>
+
+            <PostStats>
+                <HeartButton>💖<Number>{post.numHearts}</Number></HeartButton>
+                <PooButton>💩<Number>{post.numPoos}</Number> </PooButton>
+            </PostStats>
+        </Wrapper>
     )
     }
 
 }
+const Column = styled.div`
+display: flex;
+flex-direction: column;
+`
+const Bold=styled.span`
+font-weight: bold;
+`
+const Number = styled.div`
+font-size: 10px;
+margin-left: 33px;
+margin-top: -15px;
+`
+const HeartButton = styled.button`
+float: right;
+font-size: 25px;
+margin-top: -30px;
+border: none;
+background: none;
+cursor: pointer;
+margin-right: 10px;
+`
+const PooButton = styled.button`
+float: right;
+font-size: 25px;
+margin-top: -30px;
+border: none;
+background: none;
+cursor: pointer;
+`
+const Post = styled.div`
+font-size: 18px;
+`
+const Name = styled.div`
+font-family: var(--secondary-font-family);
+margin-bottom: 5px;
+`
+const Img = styled.img`
+border-radius: 50%;
+width: 80px;
+height: 80px;
+object-fit: cover;
+margin-left: 10px;
+margin-top: 10px;
+margin-right: 20px;
+`
+const PersonInfo = styled.div`
+display: flex;
+align-items: center;
+font-family: var(--secondary-font-family);
+`
+const PostStats = styled.div`
+width: 100%;
+`
+const Wrapper = styled.div`
+display: flex;
+flex-direction:column;
+width: 100%;
+height: 100%;
+`
 
 export default UserPost

@@ -21,16 +21,16 @@ const Homefeed = () => {
                     <iframe src="https://giphy.com/embed/AXHkWhNemfGjGjoG1p" width="70" height="70" ></iframe>
                     </Button>
                 </Form>
-        
+        <PostContainer>
         {/* map over all posts, pass down post.postId as prop */}
         {allPosts.map((post) => {
             return (
-                <div>
+                <PostDiv>
                 <UserPost postid={post._id}/>
-                </div>
+                </PostDiv>
             )
         })}
-        
+        </PostContainer>
             </BackgroundDiv>
         </Wrapper>
     )}
@@ -40,6 +40,22 @@ const Homefeed = () => {
         )
     }
 }
+
+const PostContainer = styled.div`
+font-size: 20px;
+margin-top: 30px;
+width: 60%;
+`
+const PostDiv = styled.div`
+background: rgba(255,255,255,0.7);
+width: 100%;
+height: 100px;
+border-radius: 5px;
+/* border: none;
+border-left: var(--orangey-yellow) 3px solid;
+border-right: var(--orangey-yellow) 3px solid; */
+margin-bottom: 10px;
+`
 const Button = styled.button`
 width: 80px;
 border: none;
@@ -82,7 +98,9 @@ border: var(--orangey-yellow) 4px solid;
 `
 const Wrapper = styled.div`
 display: flex;
+
 justify-content: center;
+/* align-items: center; */
 height: 100%;
 `
 const BackgroundDiv = styled.div`
@@ -90,7 +108,9 @@ height: 100%;
 width: 70%;
 background: rgba(172,216,210, 0.5);
 display: flex;
-justify-content: center;
+flex-direction: column;
+align-items: center;
+overflow: scroll;
 `
 
 export default Homefeed;
