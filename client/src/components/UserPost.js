@@ -1,16 +1,14 @@
 import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Context } from "../context/Context";
 
 
-//remove these imports when fetches work.
-import { allPosts } from "../data/posts";
-import { usersData } from "../data/users";
-
 const UserPost = ({postid}) => {
 
     const {allPosts, allUsers} = useContext(Context);
-  
+    let numHearts;
+    let numPoos;
 
     if (allPosts && allUsers){
     const findPost = allPosts.filter((post) => post._id === postid);
@@ -20,36 +18,50 @@ const UserPost = ({postid}) => {
     const userObject = allUsers.filter((user) => user._id === userId);
     const userIndex = allUsers.findIndex((user) => user._id === userId);
     const user = allUsers[userIndex];
+    numHearts = post.numHearts;
+    numPoos = post.numPoos;
     
-    const numHearts = user.numHearts;
-    
-    console.log(user);
+    let isHearted = false;
+    let isPooed = false;
 
-    
-//  USERDATA
-        // avatarSrc: "https://res.cloudinary.com/dwvlk8dfa/image/upload/v1659730303/Al_bhxkar.jpg"
-        // bestSubject: "Society & Culture"
-        // email: "alexkekesi@fake.email"
-        // firstName: "Alexzandra"
-        // highScore: 690
-        // id: "690AlexKekesi"
-        // lastName: "Kekesi"
-        // _id: "62ed8173cf7890e9444928df"
-// POST DATA
-// numHearts: 1
-// numPoos: 6
-// postContent: "My new top subject is Music!"
-// postId: "b6e442e2-2043-4304-802c-09b7863e4f38"
-// userId: "62ed8173cf7890e9444928dd"
-// _id: "62ed8173cf7890e9444928d4"
-    
+    //increments or decrements hearts on button & in mongo.
+    const heartHandler = (e) => {
+        e.preventDefault();
+        if (isHearted === false) {
+            fetch(`/api/post/incrementHearts/${postid}`, {
+            method: 'PATCH',
+            })
+            .then((res) => res.json())
+            .then((data) => {
+            console.log('Hearts incremented!', data);
+            })
+            .catch((error) => {
+            console.error('Error:', error);
+            });
+            isHearted = true;
+            numHearts = numHearts + 1;
+            
+        }
+        else {
+            fetch(`/api/post/decrementHearts/${postid}`, {
+                method: 'PATCH',
+                })
+                .then((res) => res.json())
+                .then((data) => {
+                console.log('Hearts decremented!', data);
+                })
+                .catch((error) => {
+                console.error('Error:', error);
+                });
+                isHearted = false;
+                numHearts = numHearts -1;
+        }
+    }
 
-    //render and style data
-    //heart and poo bar, updates post stats
 
     return(
-        <Wrapper>
-
+        <Wrapper to= {`/profile/${postid}`}>
+            
             <PersonInfo>
                 <Img src = {user.avatarSrc} alt="avatar"/>
                 <Column>
@@ -59,9 +71,10 @@ const UserPost = ({postid}) => {
             </PersonInfo>
 
             <PostStats>
-                <HeartButton>💖<Number>{post.numHearts}</Number></HeartButton>
-                <PooButton>💩<Number>{post.numPoos}</Number> </PooButton>
+                <HeartButton value={numHearts} onClick={heartHandler}>💖<Number>{numHearts}</Number></HeartButton>
+                <PooButton>💩<Number>{numPoos}</Number> </PooButton>
             </PostStats>
+            
         </Wrapper>
     )
     }
@@ -87,6 +100,12 @@ border: none;
 background: none;
 cursor: pointer;
 margin-right: 10px;
+
+&:hover{
+    font-size: 30px;
+    transition: 0.6s;
+
+}
 `
 const PooButton = styled.button`
 float: right;
@@ -95,6 +114,11 @@ margin-top: -30px;
 border: none;
 background: none;
 cursor: pointer;
+
+&:hover{
+    font-size: 30px;
+    transition: 0.6s;
+}
 `
 const Post = styled.div`
 font-size: 18px;
@@ -120,11 +144,13 @@ font-family: var(--secondary-font-family);
 const PostStats = styled.div`
 width: 100%;
 `
-const Wrapper = styled.div`
+const Wrapper = styled(Link)`
 display: flex;
 flex-direction:column;
 width: 100%;
 height: 100%;
+text-decoration: none;
+color: black;
 `
 
 export default UserPost

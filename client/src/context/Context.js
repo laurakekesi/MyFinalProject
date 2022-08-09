@@ -6,6 +6,7 @@ export const ContextProvider = ({children}) => {
 const [allPosts, setAllPosts] = useState(null);
 const [allUsers, setAllUsers] = useState(null);
 
+ //fetches all posts and sets allPosts
 useEffect(() => {
     fetch('/api/posts')
     .then((res) => res.json())
@@ -15,6 +16,7 @@ useEffect(() => {
     .catch((err) => console.log("err", err))
 }, [])
 
+//fetches all users and sets allUsers 
 useEffect(() => {
     fetch('/api/users')
     .then((res) => res.json())
@@ -25,7 +27,9 @@ useEffect(() => {
 }, [])
 
 
-    //do the same ^ for allUsers
+
+
+//do the same ^ for allUsers
 
 
 

@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import styled from "styled-components";
 import Homefeed from "./Homefeed";
 import GamePlay from "./GamePlay";
+import Profile from "./Profile";
 
 const App = () => {
   return (
@@ -17,7 +18,7 @@ const App = () => {
           <Homefeed/>
         </Route>
         <Route path = '/profile/:profileId'>
-          Profile page
+          <Profile/>
         </Route>
         <Route path = '/play'>
           <GamePlay/>
