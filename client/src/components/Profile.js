@@ -2,8 +2,9 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
 const Profile = () => {
-    const userId = useParams();
-    console.log(userId);
+    const {profileId} = useParams();
+    console.log(profileId);
+
     //use params to get id
     //create top div with profile pic, name, high score, top subject
 

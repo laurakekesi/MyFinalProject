@@ -7,9 +7,9 @@ import UserPost from "./UserPost";
 
 const Homefeed = () => {
 
-    const {allPosts} = useContext(Context);
+    const {allPosts, allUsers} = useContext(Context);
 
-    if (allPosts){
+    if (allPosts && allUsers){
     return(
         <Wrapper>
             <BackgroundDiv>
@@ -24,9 +24,10 @@ const Homefeed = () => {
         <PostContainer>
         {/* map over all posts, pass down post.postId as prop */}
         {allPosts.map((post) => {
+            const user = allUsers.find((user) => user._id === post.userId);
             return (
                 <PostDiv>
-                <UserPost postid={post._id}/>
+                <UserPost post={post} user={user}/>
                 </PostDiv>
             )
         })}
