@@ -52,9 +52,6 @@ background: rgba(255,255,255,0.7);
 width: 100%;
 height: 100px;
 border-radius: 5px;
-/* border: none;
-border-left: var(--orangey-yellow) 3px solid;
-border-right: var(--orangey-yellow) 3px solid; */
 margin-bottom: 10px;
 `
 const Button = styled.button`
