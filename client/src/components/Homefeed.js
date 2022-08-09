@@ -1,6 +1,7 @@
 import { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { Context } from "../context/Context";
+import Loading from "./Loading";
 import UserPost from "./UserPost";
 
 
@@ -37,7 +38,9 @@ const Homefeed = () => {
     )}
     else {
         return(
-            <div>Loading</div>
+            <LoadingWrapper>
+                <Loading/>
+            </LoadingWrapper>
         )
     }
 }
@@ -99,6 +102,12 @@ display: flex;
 
 justify-content: center;
 /* align-items: center; */
+height: 100%;
+`
+const LoadingWrapper = styled.div`
+display: flex;
+justify-content: center;
+align-items: center;
 height: 100%;
 `
 const BackgroundDiv = styled.div`

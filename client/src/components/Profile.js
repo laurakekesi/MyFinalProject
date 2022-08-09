@@ -31,7 +31,7 @@ const Profile = () => {
 
     //create bottom div with all posts by person
     //map over all posts by person, render userPost with {postid = not sure yet} as prop
-    if (!user && userPosts) {
+    if (user && userPosts) {
     return(
         <Wrapper>
             <BackgroundDiv>
@@ -75,7 +75,7 @@ const Profile = () => {
 }
 }
 const PostContainer = styled.div`
-height: 47%;
+height: 230px;
 width: 100%;
 overflow: scroll;
 display: flex;
