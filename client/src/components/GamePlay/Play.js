@@ -6,7 +6,7 @@ const Play = ({triviaIndex, triviaQuestions}) => {
     const createAnswersArray = () => {
       //incorrect & correct answers are stored in different keys in API, this function
       //puts them all together in one array and jumbles them (so that the correct answer
-      //isn't always the first option)
+      //isn't always the first option) 
       let answersArray = [];
       answersArray.push(currentQuestion.correctAnswer);
       currentQuestion.incorrectAnswers.forEach((answer) =>
@@ -25,7 +25,6 @@ const Play = ({triviaIndex, triviaQuestions}) => {
     return(
 <Wrapper>
 
-<Play triviaIndex = {triviaIndex} triviaQuestions = {triviaQuestions}/>
 <BackgroundDiv>
   <GameDiv>
     <TimerDiv>
@@ -128,6 +127,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   height: 90%;
+  width: 100%;
 
   /* added in because of navbar stuff */
   /* padding-top: 70px; */
