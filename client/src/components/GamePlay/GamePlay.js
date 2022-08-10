@@ -75,7 +75,7 @@ const GamePlay = () => {
             </TimerDiv>
             <QuestionDiv>
               <QuestionIndex>{triviaIndex + 1}/20</QuestionIndex>
-              <div>{currentQuestion.question}</div>
+              <Question>{currentQuestion.question}</Question>
             </QuestionDiv>
             <AnswersDiv>
               {shuffledAnswers.map((answer) => {
@@ -100,6 +100,12 @@ const GamePlay = () => {
     )
   }
 };
+const Question = styled.div`
+display: flex;
+justify-content: center;
+width: 100%;
+padding: 15px;
+`
 const QuestionIndex = styled.div`
   font-family: var(--header-font-family);
   font-size: 30px;
