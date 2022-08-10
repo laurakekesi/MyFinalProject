@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const { getUsers, 
   getUserById,
+  getUserByEmail,
   updateHighScore,
   updateBestSubject
 } = require("./userHandlers");
@@ -55,6 +56,7 @@ express()
 .get('/api/user/:userId', getUserById) //gets specific user object by id
 .patch('/api/highScore/:userId', updateHighScore) //updates user's high score.
 .patch('/api/bestSubject/:userId', updateBestSubject) //updates user's top subject.
+.get('/api/userByEmail/:userEmail', getUserByEmail) //gets specific user object by id
 
 //Post endpoints
 .get('/api/posts', getPosts)//gets all posts

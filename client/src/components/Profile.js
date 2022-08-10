@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { Context } from "../context/Context";
 import Loading from "./Loading";
 import UserPost from "./UserPost";
 
@@ -8,6 +9,7 @@ const Profile = () => {
     const {profileId} = useParams();
     const [user, setUser] = useState(null);
     const [userPosts, setUserPosts] = useState(null);
+    const {currentUser} = useContext(Context)
     
      //fetches user info based on their id in params.
     useEffect(() => {
@@ -29,8 +31,8 @@ const Profile = () => {
     .catch((err) => console.log("err", err))
     }, []);
 
-    //create bottom div with all posts by person
-    //map over all posts by person, render userPost with {postid = not sure yet} as prop
+
+
     if (user && userPosts) {
     return(
         <Wrapper>

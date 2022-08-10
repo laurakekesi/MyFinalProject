@@ -6,6 +6,8 @@ export const Context = createContext();
 export const ContextProvider = ({children}) => {
 const [allPosts, setAllPosts] = useState(null);
 const [allUsers, setAllUsers] = useState(null);
+const [loggedInUser, setLoggedInUser] = useState(null);
+const { user: currentUser, isAuthenticated, isLoading } = useAuth0();
 
  //fetches all posts and sets allPosts
 useEffect(() => {
@@ -28,8 +30,20 @@ useEffect(() => {
 }, [])
 
 
-const { user: currentUser, isAuthenticated, isLoading } = useAuth0();
+useEffect(() => {
+    if(isAuthenticated){
+    fetch(`/api/userByEmail/${currentUser.email}`)
+    .then((res) => res.json())
+    .then((data) => {
+        setLoggedInUser(data.data);
+    })
+    .catch((err) => console.log("err", err))}
+}, [currentUser])
 
+
+
+
+console.log(loggedInUser);
 // currentUser =>
 // email: "laurakekesi@gmail.com"
 // email_verified: true
@@ -45,7 +59,7 @@ const { user: currentUser, isAuthenticated, isLoading } = useAuth0();
 
 
     return(
-       <Context.Provider value={{ allPosts, allUsers, currentUser}}>
+       <Context.Provider value={{ allPosts, allUsers, currentUser, loggedInUser}}>
            {children}
        </Context.Provider>
     )

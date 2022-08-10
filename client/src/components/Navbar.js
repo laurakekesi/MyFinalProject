@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import homeIcon from "../images/homeIcon.png";
+import Logout from "./Auth0/Logout";
 
 const Navbar = () => {
 return (
@@ -12,6 +13,7 @@ return (
         <Links to = "/play">
             Play Now!
         </Links>
+        <Logout/>
         <Links to = "/profile/:profileId">
             Hello, user!
         </Links>
