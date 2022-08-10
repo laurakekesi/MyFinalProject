@@ -44,31 +44,31 @@ const GamePlay = () => {
   }, [triviaIndex]);
 
   if (triviaQuestions && gameState === "play") {
-    let currentQuestion = triviaQuestions[triviaIndex];
-    const createAnswersArray = () => {
-      //incorrect & correct answers are stored in different keys in API, this function
-      //puts them all together in one array and jumbles them (so that the correct answer
-      //isn't always the first option)
-      let answersArray = [];
-      answersArray.push(currentQuestion.correctAnswer);
-      currentQuestion.incorrectAnswers.forEach((answer) =>
-        answersArray.push(answer)
-      );
-      //shuffles the answers array
-      const shuffled = answersArray.sort(() => {
-        return Math.random() - 0.5;
-      });
-      return shuffled;
-    };
+    // let currentQuestion = triviaQuestions[triviaIndex];
+    // const createAnswersArray = () => {
+    //   //incorrect & correct answers are stored in different keys in API, this function
+    //   //puts them all together in one array and jumbles them (so that the correct answer
+    //   //isn't always the first option)
+    //   let answersArray = [];
+    //   answersArray.push(currentQuestion.correctAnswer);
+    //   currentQuestion.incorrectAnswers.forEach((answer) =>
+    //     answersArray.push(answer)
+    //   );
+    //   //shuffles the answers array
+    //   const shuffled = answersArray.sort(() => {
+    //     return Math.random() - 0.5;
+    //   });
+    //   return shuffled;
+    // };
 
-    const shuffledAnswers = createAnswersArray();
-    const correctAnswer = currentQuestion.correctAnswer;
+    // const shuffledAnswers = createAnswersArray();
+    // const correctAnswer = currentQuestion.correctAnswer;
 
     return (
       <Wrapper>
 
-        {/* <Play triviaIndex = {triviaIndex} triviaQuestions = {triviaQuestions}/> */}
-        <BackgroundDiv>
+        <Play triviaIndex = {triviaIndex} triviaQuestions = {triviaQuestions}/>
+        {/* <BackgroundDiv>
           <GameDiv>
             <TimerDiv>
               <TimerBar />
@@ -87,7 +87,7 @@ const GamePlay = () => {
               })}
             </AnswersDiv>
           </GameDiv>
-        </BackgroundDiv>
+        </BackgroundDiv> */}
       </Wrapper>
     );
 

@@ -5,23 +5,24 @@ import Loading from "./Loading";
 import UserPost from "./UserPost";
 
 const Homefeed = () => {
-    const {loggedInUser, allPosts, allUsers} = useContext(Context);
-
+  const { loggedInUser, allPosts, setAllPosts, allUsers } = useContext(Context);
+    
   const submitHandler = (e) => {
     e.preventDefault();
     fetch("/api/posts", {
       body: JSON.stringify({
         userId: loggedInUser._id,
-        postContent: e.target.value
+        postContent: e.target[0].value,
       }),
       method: "POST",
       headers: { "Content-Type": "application/json" },
     })
-    .then((res)=>res.json())
-    .catch((err)=>console.log(err))
+      .then((res) => {
+        res.json();
+        window.location.reload();
+      })
+      .catch((err) => console.log(err));
   };
-
-
 
   if (allPosts && allUsers) {
     return (
@@ -30,11 +31,12 @@ const Homefeed = () => {
           <Form onSubmit={submitHandler}>
             <TextArea placeholder="What's on your mind?"></TextArea>
             <Button>
-              <img
+              {/* <img
                 src="https://giphy.com/embed/AXHkWhNemfGjGjoG1p"
                 width="70"
                 height="70"
-              ></img>
+              ></img> */}
+              Post
             </Button>
           </Form>
           <PostContainer>
@@ -79,6 +81,7 @@ const Button = styled.button`
   background: rgba(255, 125, 158, 0.2);
   margin-left: 85%;
   margin-bottom: 10px;
+  cursor: pointer;
 `;
 const TextArea = styled.textarea`
   resize: none;

@@ -14,7 +14,7 @@ useEffect(() => {
     fetch('/api/posts')
     .then((res) => res.json())
     .then((data) => {
-        setAllPosts(data.data);
+        setAllPosts(data.data.reverse());
     })
     .catch((err) => console.log("err", err))
 }, [])
@@ -59,7 +59,7 @@ console.log(loggedInUser);
 
 
     return(
-       <Context.Provider value={{ allPosts, allUsers, currentUser, loggedInUser}}>
+       <Context.Provider value={{ allPosts, setAllPosts, allUsers, currentUser, loggedInUser}}>
            {children}
        </Context.Provider>
     )
