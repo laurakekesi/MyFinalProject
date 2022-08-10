@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { useAuth0 } from '@auth0/auth0-react';
 
 export const Context = createContext();
 
@@ -27,14 +28,24 @@ useEffect(() => {
 }, [])
 
 
+const { user: currentUser, isAuthenticated, isLoading } = useAuth0();
 
-
-//do the same ^ for allUsers
+// currentUser =>
+// email: "laurakekesi@gmail.com"
+// email_verified: true
+// family_name: "kekesi"
+// given_name: "laura"
+// locale: "en-GB"
+// name: "laura kekesi"
+// nickname: "laurakekesi"
+// picture: "https://lh3.googleusercontent.com/a-/AFdZucpCEg4xzRjY0yPeTkOmJxVPzC86tbjGlwSYPADoSw=s96-c"
+// sub: "google-oauth2|114732156286624958710"
+// updated_at: "2022-08-10T15:59:56.002Z"
 
 
 
     return(
-       <Context.Provider value={{ allPosts, allUsers }}>
+       <Context.Provider value={{ allPosts, allUsers, currentUser}}>
            {children}
        </Context.Provider>
     )
