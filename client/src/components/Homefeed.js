@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Context } from "../context/Context";
 import Loading from "./Loading";
@@ -6,7 +6,20 @@ import UserPost from "./UserPost";
 
 const Homefeed = () => {
   const { loggedInUser, allPosts, setAllPosts, allUsers } = useContext(Context);
-    
+  const [isDisabled, setIsDisabled] = useState(true);
+
+//If there is nothing in the textarea, this function disables the submit button,
+//not allowing the user to post.
+  const buttonHandler = (e) => {
+    if (e.target.value.length > 0) {
+      setIsDisabled(false)
+  } else {
+    setIsDisabled(true)
+  }
+}
+
+  //on submit, passes the logged in user's id, as well as the content of the text
+  //area to the body to the backend, then reloads the page so user can see their post.
   const submitHandler = (e) => {
     e.preventDefault();
     fetch("/api/posts", {
@@ -29,18 +42,12 @@ const Homefeed = () => {
       <Wrapper>
         <BackgroundDiv>
           <Form onSubmit={submitHandler}>
-            <TextArea placeholder="What's on your mind?"></TextArea>
-            <Button>
-              {/* <img
-                src="https://giphy.com/embed/AXHkWhNemfGjGjoG1p"
-                width="70"
-                height="70"
-              ></img> */}
+            <TextArea placeholder="What's on your mind?" onChange={buttonHandler}></TextArea>
+            <Button disabled={isDisabled}>
               Post
             </Button>
           </Form>
           <PostContainer>
-            {/* map over all posts, pass down post.postId as prop */}
             {allPosts.map((post) => {
               const user = allUsers.find((user) => user._id === post.userId);
               return (
@@ -75,13 +82,23 @@ const PostDiv = styled.div`
   margin-bottom: 10px;
 `;
 const Button = styled.button`
-  width: 80px;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 125, 158, 0.2);
-  margin-left: 85%;
+  height: 70px;
+  width: 55px;
+  color: white;
+  font-family: var(--test-font);
+  font-size: 25px;
+  background: rgba(255, 125, 158, 0.7);
+  margin-left: 89%;
   margin-bottom: 10px;
   cursor: pointer;
+
+  &:disabled{
+    cursor: not-allowed;
+    opacity: 0.7;
+    color: lightgray;
+  }
 `;
 const TextArea = styled.textarea`
   resize: none;
@@ -117,9 +134,7 @@ const Form = styled.form`
 `;
 const Wrapper = styled.div`
   display: flex;
-
   justify-content: center;
-  /* align-items: center; */
   height: 100%;
 `;
 const LoadingWrapper = styled.div`

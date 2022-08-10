@@ -2,8 +2,13 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import homeIcon from "../images/homeIcon.png";
 import Logout from "./Auth0/Logout";
+import { useContext } from "react";
+import { Context } from "../context/Context";
 
 const Navbar = () => {
+    const {loggedInUser} = useContext(Context);
+
+    
 return (
     <Wrapper>
         <Div>
@@ -11,17 +16,42 @@ return (
             <Img src = {homeIcon} alt="Home icon"/>
         </Links>
         <Links to = "/play">
+            <PlayDiv>
             Play Now!
+            </PlayDiv>
         </Links>
+        
+        {loggedInUser ?
+        <div>
+        <Links to = {`/profile/${loggedInUser._id}`} >
+            Hello, {loggedInUser.firstName}
+            <Avatar src = {loggedInUser.avatarSrc}/>
+        </Links>
+        <LogoutDiv>
         <Logout/>
-        <Links to = "/profile/:profileId">
-            Hello, user!
-        </Links>
+        </LogoutDiv>
+        </div>
+        : <div></div>}
+        
         </Div>
     </Wrapper>
 )
 }
-
+const PlayDiv=styled.div`
+padding-left: 200px;
+`
+const LogoutDiv = styled.span`
+  margin-left: 30px;
+ /* margin-bottom: -10px; */
+`
+const Avatar = styled.img`
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  margin-left: 10px;
+ margin-bottom: -10px;
+`
 const Img = styled.img`
 height: 45px;
 `
