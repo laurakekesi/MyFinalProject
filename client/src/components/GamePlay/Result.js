@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import TimerBar from "../TimerBar";
 
-const Play = ({triviaIndex, shuffledAnswers, correctAnswer, currentQuestion}) => {
+const Result = ({triviaIndex, shuffledAnswers, correctAnswer, currentQuestion}) => {
     // let currentQuestion = triviaQuestions[triviaIndex];
     // const createAnswersArray = () => {
     //   //incorrect & correct answers are stored in different keys in API, this function
@@ -22,13 +21,14 @@ const Play = ({triviaIndex, shuffledAnswers, correctAnswer, currentQuestion}) =>
     // const shuffledAnswers = createAnswersArray();
     // const correctAnswer = currentQuestion.correctAnswer;
 
+    console.log("PAUSE");
+
     return(
 <Wrapper>
 
 <BackgroundDiv>
   <GameDiv>
     <TimerDiv>
-      <TimerBar />
     </TimerDiv>
     <QuestionDiv>
       <QuestionIndex>{triviaIndex + 1}/20</QuestionIndex>
@@ -67,7 +67,7 @@ const IncorrectAnswer = styled.button`
   width: 45%;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.5);
-  border: var(--orangey-yellow) 4px solid;
+  border: #ed2863 4px solid;
   font-family: var(--secondary-font-family);
   font-size: 25px;
   cursor: pointer;
@@ -79,9 +79,8 @@ const CorrectAnswer = styled.button`
   height: 40%;
   width: 45%;
   border-radius: 10px;
-  /* background: rgba(255,255,255,0.5); */
   background: pink;
-  border: var(--orangey-yellow) 4px solid;
+  border: #c8ff8e 4px solid;
   cursor: pointer;
   font-family: var(--secondary-font-family);
   font-size: 25px;
@@ -133,4 +132,4 @@ const Wrapper = styled.div`
   /* padding-top: 70px; */
 `
 
-export default Play;
+export default Result;

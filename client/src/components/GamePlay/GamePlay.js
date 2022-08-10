@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import Play from "./Play";
-import Loading from "../Loading"
+import Result from "./Result";
+import Loading from "../Loading";
 import TimerBar from "../TimerBar";
 
 const GamePlay = () => {
@@ -9,6 +10,8 @@ const GamePlay = () => {
   const [triviaIndex, setTriviaIndex] = useState(null);
   const [pointTally, setPointTally] = useState(0);
   const [gameState, setGameState] = useState("pause");
+  const shuffledAnswers = [];
+  
 
   useEffect(() => {
     fetch("/api/triviaQuestions")
@@ -43,18 +46,55 @@ const GamePlay = () => {
     
   }, [triviaIndex]);
 
-  if (triviaQuestions && gameState === "play") {
+  if (triviaQuestions && triviaIndex) {
+
+  const currentQuestion = triviaQuestions[triviaIndex];
+  const createAnswersArray = () => {
+    //incorrect & correct answers are stored in different keys in API, this function
+    //puts them all together in one array and jumbles them (so that the correct answer
+    //isn't always the first option) 
+    let answersArray = [];
+    answersArray.push(currentQuestion.correctAnswer);
+    currentQuestion.incorrectAnswers.forEach((answer) =>
+      answersArray.push(answer)
+    );
+    //shuffles the answers array
+    const shuffled = answersArray.sort(() => {
+      return Math.random() - 0.5;
+    });
+
+    shuffled.forEach((question) => shuffledAnswers.push(question))
+  };
+
+ createAnswersArray();
+const correctAnswer = currentQuestion.correctAnswer;
 
 
+  if (triviaQuestions && gameState === "play" && shuffledAnswers) {
     return (
       <Wrapper>
-
-        <Play triviaIndex = {triviaIndex} triviaQuestions = {triviaQuestions}/>
-
+        <Play triviaIndex = {triviaIndex} 
+        // triviaQuestions = {triviaQuestions} 
+        shuffledAnswers = {shuffledAnswers}
+        correctAnswer = {correctAnswer}
+        currentQuestion = {currentQuestion}
+        />
       </Wrapper>
     );
-
   }  
+  if (gameState === "result") {
+    return (
+    <Wrapper>
+      <Result triviaIndex = {triviaIndex} 
+        // triviaQuestions = {triviaQuestions} 
+        shuffledAnswers = {shuffledAnswers}
+        correctAnswer = {correctAnswer}
+        currentQuestion = {currentQuestion}
+        />
+    </Wrapper>
+    );
+  }
+}
   else {
     return (
       <Wrapper>
