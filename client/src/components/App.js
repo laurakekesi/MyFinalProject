@@ -3,7 +3,7 @@ import GlobalStyles from "../styles/GlobalStyles";
 import Navbar from "./Navbar";
 import styled from "styled-components";
 import Homefeed from "./Homefeed";
-import GamePlay from "./GamePlay";
+import GamePlay from "./GamePlay/GamePlay"
 import Profile from "./Profile";
 
 const App = () => {

@@ -1,49 +1,12 @@
-import { useEffect, useState } from "react";
 import styled from "styled-components";
-import TimerBar from "./TimerBar";
+import TimerBar from "../TimerBar";
 
-const GamePlay = () => {
-  const [triviaQuestions, setTriviaQuestions] = useState(null);
-  const [triviaIndex, setTriviaIndex] = useState(null);
-  const [pointTally, setPointTally] = useState(0);
-  const [gameState, setGameState] = useState("pause");
-
-  useEffect(() => {
-    fetch("/api/triviaQuestions")
-      .then((res) => res.json())
-      .then((data) => {
-        setTriviaQuestions(data.data);
-        setTriviaIndex(0);
-        console.log("Use effect", data.data);
-      })
-      .catch((err) => console.log("err", err));
-  }, []);
-
-
-  useEffect(() => {
-      
-    setGameState("play");
-    setTimeout(() => {
-      setGameState("result");
-      setTimeout(() => {
-          if (triviaIndex < 19) {
-          setTriviaIndex(triviaIndex+1)
-        } else {
-            setGameState("gameOver");
-        }
-      }, 5000)
-    }, 15000);
-    
-  }, [triviaIndex]);
-
-  
-  //if state ==== play, settimeout 15s
-
-  if (triviaQuestions && gameState === "play") {
-    // console.log(triviaQuestions[0]);
+const Play = ({triviaIndex, triviaQuestions}) => {
     let currentQuestion = triviaQuestions[triviaIndex];
-
-    const createAnswersArray = (object) => {
+    const createAnswersArray = () => {
+      //incorrect & correct answers are stored in different keys in API, this function
+      //puts them all together in one array and jumbles them (so that the correct answer
+      //isn't always the first option)
       let answersArray = [];
       answersArray.push(currentQuestion.correctAnswer);
       currentQuestion.incorrectAnswers.forEach((answer) =>
@@ -58,40 +21,34 @@ const GamePlay = () => {
 
     const shuffledAnswers = createAnswersArray();
     const correctAnswer = currentQuestion.correctAnswer;
-    //set timeout, after 15 seconds, if no answer is selected, points = 0
-    //else
-    //create a function where on click,
-    // 1) if correct answer, give points, else 0 points
-    // push points to points tally (array?)
-    // change border colours to red or green
-    //either way, after 15 seconds, move on to next question.
 
-    return (
-      <Wrapper>
-        <BackgroundDiv>
-          <GameDiv>
-            <TimerDiv>
-              <TimerBar />
-            </TimerDiv>
-            <QuestionDiv>
-              <QuestionIndex>{triviaIndex + 1}/20</QuestionIndex>
-              <div>{currentQuestion.question}</div>
-            </QuestionDiv>
-            <AnswersDiv>
-              {shuffledAnswers.map((answer) => {
-                return answer === correctAnswer ? (
-                  <CorrectAnswer value={answer}>{answer}</CorrectAnswer>
-                ) : (
-                  <IncorrectAnswer value={answer}>{answer}</IncorrectAnswer>
-                );
-              })}
-            </AnswersDiv>
-          </GameDiv>
-        </BackgroundDiv>
-      </Wrapper>
-    );
-  }
-};
+    return(
+<Wrapper>
+
+<Play triviaIndex = {triviaIndex} triviaQuestions = {triviaQuestions}/>
+<BackgroundDiv>
+  <GameDiv>
+    <TimerDiv>
+      <TimerBar />
+    </TimerDiv>
+    <QuestionDiv>
+      <QuestionIndex>{triviaIndex + 1}/20</QuestionIndex>
+      <div>{currentQuestion.question}</div>
+    </QuestionDiv>
+    <AnswersDiv>
+      {shuffledAnswers.map((answer) => {
+        return answer === correctAnswer ? (
+          <CorrectAnswer value={answer}>{answer}</CorrectAnswer>
+        ) : (
+          <IncorrectAnswer value={answer}>{answer}</IncorrectAnswer>
+        );
+      })}
+    </AnswersDiv>
+  </GameDiv>
+</BackgroundDiv>
+</Wrapper>
+    )
+}
 const QuestionIndex = styled.div`
   font-family: var(--header-font-family);
   font-size: 30px;
@@ -165,6 +122,7 @@ const BackgroundDiv = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -172,6 +130,7 @@ const Wrapper = styled.div`
   height: 90%;
 
   /* added in because of navbar stuff */
-  padding-top: 70px;
-`;
-export default GamePlay;
+  /* padding-top: 70px; */
+`
+
+export default Play;
