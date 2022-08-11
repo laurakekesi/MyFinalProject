@@ -3,10 +3,12 @@ import styled from "styled-components";
 import { Context } from "../context/Context";
 import Loading from "./Loading";
 import UserPost from "./UserPost";
+import { useHistory } from "react-router-dom"; 
 
 const Homefeed = () => {
   const { loggedInUser, allPosts, setAllPosts, allUsers } = useContext(Context);
   const [isDisabled, setIsDisabled] = useState(true);
+  const history = useHistory();
 
 //If there is nothing in the textarea, this function disables the submit button,
 //not allowing the user to post.
@@ -35,6 +37,7 @@ const Homefeed = () => {
         window.location.reload();
       })
       .catch((err) => console.log(err));
+      // history.push("/error");
   };
 
   if (allPosts && allUsers) {

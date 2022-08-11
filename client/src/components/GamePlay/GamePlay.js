@@ -24,7 +24,6 @@ const GamePlay = () => {
         setTriviaQuestions(data.data);
         //when data is fetched, sets triviaIndex && pointsTally to 0, beginning the game
         setTriviaIndex(0);
-        // console.log("check answer",setTriviaIndex);
       })
       .catch((err) => console.log("err", err));
   }, []);

@@ -4,19 +4,19 @@ import homeIcon from "../images/homeIcon.png";
 import Logout from "./Auth0/Logout";
 import { useContext } from "react";
 import { Context } from "../context/Context";
-import { Icon } from 'react-icons-kit'
-import {home} from 'react-icons-kit/feather/home'
+import { Icon } from 'react-icons-kit';
+import {home} from 'react-icons-kit/feather/home';
+import { useHistory } from "react-router-dom";
 
 const Navbar = () => {
     const {loggedInUser} = useContext(Context);
+    const history = useHistory();
 
     
 return (
     <Wrapper>
         <Div>
         <Links to = "/" exact>
-            {/* <HomeDiv>🏠</HomeDiv> */}
-            {/* <Img src = {homeIcon} alt="Home icon"/> */}
             <Icon size={40} icon={home}/>
         </Links>
         <Links to = "/play">

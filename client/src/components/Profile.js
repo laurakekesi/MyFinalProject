@@ -4,12 +4,14 @@ import styled from "styled-components";
 import { Context } from "../context/Context";
 import Loading from "./Loading";
 import UserPost from "./UserPost";
+import { useHistory } from "react-router-dom";
 
 const Profile = () => {
     const {profileId} = useParams();
     const [user, setUser] = useState(null);
     const [userPosts, setUserPosts] = useState(null);
-    const {currentUser} = useContext(Context)
+    const {currentUser} = useContext(Context);
+    const history = useHistory();
     
      //fetches user info based on their id in params.
     useEffect(() => {
@@ -18,7 +20,9 @@ const Profile = () => {
     .then((data) => {
         setUser(data.data);
     })
-    .catch((err) => console.log("err", err))
+    .catch((err) => {
+    // console.log("err", err);
+    history.push("/error")})
     }, [])
 
     //fetches user posts based on their id in params.
@@ -28,7 +32,9 @@ const Profile = () => {
     .then((data) => {
         setUserPosts(data.data);
     })
-    .catch((err) => console.log("err", err))
+    .catch((err) => {
+        console.log("err", err);
+        history.push("/error")})
     }, []);
 
 

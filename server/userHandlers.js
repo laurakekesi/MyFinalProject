@@ -87,7 +87,7 @@ const updateBestSubject = async(req, res) => {
       res.status(500).json({status: 500, message: "Server error!"});
   }
 }
-
+//increments value of question category provided in body by 1
 const updateCorrectAnswers = async(req,res) => {
 const client = new MongoClient(MONGO_URI, options);
 try {
@@ -97,18 +97,17 @@ try {
   const query = ({_id: ObjectId(_id)});
   const userToUpdate  = await db.collection("users_data").findOne({_id: ObjectId(_id)});
   if (userToUpdate) {
-    // console.log("userToUpdate", userToUpdate)
     const bodyCategory = req.body.category;
-    // console.log("bodyCat", bodyCategory)
+    //finds the correctAnswers object within the logged in users's use object.
     const correctAnswers = userToUpdate.correctAnswers;
-    // console.log("correctAnswers", correctAnswers[bodyCategory])
+    //sets the original value to a number and increments that number by 1.
     const valueToUpdate = Number(correctAnswers[bodyCategory]);
-    // console.log("categoryToUpdate", valueToUpdate)
     const newCatValue = valueToUpdate + 1;
-    // console.log("newCatValue", newCatValue)
+    //updates the key value pair of the specific category to the new value and sets the
+    //correctAnswers object to include the updated key/value pair.
     correctAnswers[bodyCategory] = newCatValue;
-    console.log(correctAnswers);
     const newValues = {$set: {correctAnswers}};
+    //only updates the user object if the category in the body already exists.
     if (correctAnswers[bodyCategory]){
     const updatedUser = await db.collection("users_data").updateOne(query, newValues);
     updatedUser.modifiedCount === 1?
