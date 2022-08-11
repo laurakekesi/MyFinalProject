@@ -3,8 +3,8 @@ import styled from "styled-components";
 import { Context } from "../../context/Context";
 import TimerBar from "../TimerBar";
 
-const Play = ({triviaIndex, shuffledAnswers, correctAnswer, currentQuestion}) => {
-  const {setSelectedAnswer, pointsTally} = useContext(Context);
+const Play = ({triviaIndex, correctAnswer, currentQuestion, shuffledAnswers}) => {
+  const {setSelectedAnswer, pointsTally,} = useContext(Context);
 
 
   //sets the user's selected answer to a state in Context, to be used in Result.js

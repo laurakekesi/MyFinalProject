@@ -10,9 +10,12 @@ const GamePlay = () => {
   const [triviaQuestions, setTriviaQuestions] = useState(null);
   const [triviaIndex, setTriviaIndex] = useState(null);
   const [gameState, setGameState] = useState("pause");
-  const {setPointsTally} = useContext(Context)
+  const {setPointsTally} = useContext(Context);
   const shuffledAnswers = [];
   
+  if (gameState === "pause"){
+    setPointsTally(0);
+  }
 
   useEffect(() => {
     fetch("/api/triviaQuestions")
@@ -21,11 +24,13 @@ const GamePlay = () => {
         setTriviaQuestions(data.data);
         //when data is fetched, sets triviaIndex && pointsTally to 0, beginning the game
         setTriviaIndex(0);
-        console.log("Use effect", data.data);
+        console.log("check answer",setTriviaIndex);
+        // console.log("Use effect", data.data);
       })
       .catch((err) => console.log("err", err));
   }, []);
 
+ 
 
   useEffect(() => {
     //when triviaIndex is changed, game state is set to play for 15 seconds
@@ -36,8 +41,8 @@ const GamePlay = () => {
       //the useEffect to repeat all over again but with a new question.
       setGameState("result");
       setTimeout(() => {
-          if (triviaIndex < 19) {
-          setTriviaIndex(triviaIndex+1)
+          if (triviaIndex < 19 ) {
+          setTriviaIndex(triviaIndex + 1)
           //if index is 19, there are no more questions, game state set to game over.
         } else {
             setGameState("gameOver");
@@ -47,13 +52,14 @@ const GamePlay = () => {
     
   }, [triviaIndex]);
 
-  if (triviaQuestions && triviaIndex) {
+  if (triviaQuestions && triviaIndex >=0) {
 
-  // if (gameState === "pause"){
-  //   setPointsTally(0);
-  // }
+ 
   const currentQuestion = triviaQuestions[triviaIndex];
+
+  
   const createAnswersArray = () => {
+    // const shuffledAnswersArray=[]
     //incorrect & correct answers are stored in different keys in API, this function
     //puts them all together in one array and jumbles them (so that the correct answer
     //isn't always the first option) 
@@ -68,6 +74,7 @@ const GamePlay = () => {
     });
 
     shuffled.forEach((question) => shuffledAnswers.push(question))
+    // setShuffledAnswers(shuffledAnswersArray)
   };
 
 createAnswersArray();

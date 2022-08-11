@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import { Context } from "../../context/Context";
 
@@ -8,22 +8,24 @@ const Result = ({
   correctAnswer,
   currentQuestion,
 }) => {
-  const { selectecAnswer, pointsTally, setPointsTally } = useContext(Context);
+  const { selectedAnswer, pointsTally, setPointsTally,} = useContext(Context);
+ let numOfPoints;
   
   const pointsHandler = () => {
-    let numOfPoints = 0;
-    if (selectecAnswer === correctAnswer) {
+   
       if (currentQuestion.difficulty === "easy") {
         numOfPoints = 20;
       }
-      if (currentQuestion.difficulty === "medium") {
+      else if (currentQuestion.difficulty === "medium") {
         numOfPoints = 30;
       }
-      if (currentQuestion.difficulty === "easy") {
+      else {
         numOfPoints = 50;
       }
-    } 
+
+    
     setPointsTally(pointsTally + numOfPoints);
+    console.log(setPointsTally);
   };
 
   pointsHandler();

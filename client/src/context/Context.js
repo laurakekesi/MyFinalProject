@@ -9,6 +9,7 @@ const [allUsers, setAllUsers] = useState(null);
 const [loggedInUser, setLoggedInUser] = useState(null);
 const [pointsTally, setPointsTally] = useState(0);
 const [selectedAnswer, setSelectedAnswer] = useState(null);
+const [shuffledAnswers, setShuffledAnswers] = useState(null);
 const { user: currentUser, isAuthenticated, isLoading } = useAuth0();
 
  //fetches all posts and sets allPosts
@@ -50,7 +51,8 @@ useEffect(() => {
 
     return(
        <Context.Provider value={{ allPosts, setAllPosts, allUsers, currentUser, loggedInUser,
-        pointsTally, setPointsTally, selectedAnswer, setSelectedAnswer
+        pointsTally, setPointsTally, selectedAnswer, setSelectedAnswer, shuffledAnswers,
+        setShuffledAnswers,
        }}>
            {children}
        </Context.Provider>
