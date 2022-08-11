@@ -56,6 +56,8 @@ express()
 .get('/api/userByEmail/:userEmail', getUserByEmail) //gets specific user object by email
 .patch('/api/highScore/:userId', updateHighScore) //updates user's high score.
 .patch('/api/bestSubject/:userId', updateBestSubject) //updates user's top subject.
+
+
 .patch('/api/correctAnswers', updateCorrectAnswers) //updates user's correctAnswers object
 
 //Post endpoints

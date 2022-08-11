@@ -93,16 +93,31 @@ const client = new MongoClient(MONGO_URI, options);
 try {
   await client.connect();
   const db = client.db("myFinalProject");
-  const _id = req.body.userId;
-  const bodyCategory = req.body.category;
+  const _id = req.body._id;
   const query = ({_id: ObjectId(_id)});
   const userToUpdate  = await db.collection("users_data").findOne({_id: ObjectId(_id)});
   if (userToUpdate) {
-    const categoryToUpdate = userToUpdate.correctAnswers.bodyCategory;
+    // console.log("userToUpdate", userToUpdate)
+    const bodyCategory = req.body.category;
+    // console.log("bodyCat", bodyCategory)
+    const correctAnswers = userToUpdate.correctAnswers;
+    // console.log("correctAnswers", correctAnswers[bodyCategory])
+    const valueToUpdate = Number(correctAnswers[bodyCategory]);
+    // console.log("categoryToUpdate", valueToUpdate)
+    const newCatValue = valueToUpdate + 1;
+    // console.log("newCatValue", newCatValue)
+    correctAnswers[bodyCategory] = newCatValue;
+    console.log(correctAnswers);
+    const newValues = {$set: {correctAnswers}};
+    if (correctAnswers[bodyCategory]){
+    const updatedUser = await db.collection("users_data").updateOne(query, newValues);
+    updatedUser.modifiedCount === 1?
+    res.status(200).json({status: 200, data: updatedUser ,message: "User category updated!"})
+    : res.status(404).json({status: 404, data: updatedUser ,message: "User category not updated."})
+    } else {
+      res.status(404).json({status: 404, message: "Category not found."})
+    }
   }
-  
-  
-
 }
 catch {
   res.status(500).json({status: 500, message: "Server error!"});

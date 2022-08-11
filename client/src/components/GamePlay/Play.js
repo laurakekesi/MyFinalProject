@@ -82,8 +82,7 @@ const CorrectAnswer = styled.button`
   height: 40%;
   width: 45%;
   border-radius: 10px;
-  /* background: rgba(255,255,255,0.5); */
-  background: pink;
+  background: rgba(255,255,255,0.5);
   border: var(--orangey-yellow) 4px solid;
   cursor: pointer;
   font-family: var(--secondary-font-family);
