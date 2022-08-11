@@ -4,6 +4,8 @@ import homeIcon from "../images/homeIcon.png";
 import Logout from "./Auth0/Logout";
 import { useContext } from "react";
 import { Context } from "../context/Context";
+import { Icon } from 'react-icons-kit'
+import {home} from 'react-icons-kit/feather/home'
 
 const Navbar = () => {
     const {loggedInUser} = useContext(Context);
@@ -13,7 +15,9 @@ return (
     <Wrapper>
         <Div>
         <Links to = "/" exact>
-            <Img src = {homeIcon} alt="Home icon"/>
+            {/* <HomeDiv>🏠</HomeDiv> */}
+            {/* <Img src = {homeIcon} alt="Home icon"/> */}
+            <Icon size={40} icon={home}/>
         </Links>
         <Links to = "/play">
             <PlayDiv>
@@ -37,6 +41,10 @@ return (
     </Wrapper>
 )
 }
+
+const HomeDiv = styled.div`
+font-size: 40px;
+`
 const PlayDiv=styled.div`
 padding-left: 200px;
 `

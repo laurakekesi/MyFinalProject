@@ -1,26 +1,17 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { Context } from "../../context/Context";
 import TimerBar from "../TimerBar";
 
 const Play = ({triviaIndex, shuffledAnswers, correctAnswer, currentQuestion}) => {
-    // let currentQuestion = triviaQuestions[triviaIndex];
-    // const createAnswersArray = () => {
-    //   //incorrect & correct answers are stored in different keys in API, this function
-    //   //puts them all together in one array and jumbles them (so that the correct answer
-    //   //isn't always the first option) 
-    //   let answersArray = [];
-    //   answersArray.push(currentQuestion.correctAnswer);
-    //   currentQuestion.incorrectAnswers.forEach((answer) =>
-    //     answersArray.push(answer)
-    //   );
-    //   //shuffles the answers array
-    //   const shuffled = answersArray.sort(() => {
-    //     return Math.random() - 0.5;
-    //   });
-    //   return shuffled;
-    // };
+  const {setSelectedAnswer, pointsTally} = useContext(Context);
 
-    // const shuffledAnswers = createAnswersArray();
-    // const correctAnswer = currentQuestion.correctAnswer;
+
+  //sets the user's selected answer to a state in Context, to be used in Result.js
+  //to determine if the user selected the correct answer.
+  const answerHandler = (e) => {
+    setSelectedAnswer(e.target.value);
+  }
 
     return(
 <Wrapper>
@@ -37,17 +28,26 @@ const Play = ({triviaIndex, shuffledAnswers, correctAnswer, currentQuestion}) =>
     <AnswersDiv>
       {shuffledAnswers.map((answer) => {
         return answer === correctAnswer ? (
-          <CorrectAnswer value={answer}>{answer}</CorrectAnswer>
+          <CorrectAnswer value={answer} onClick={answerHandler}>{answer}</CorrectAnswer>
         ) : (
-          <IncorrectAnswer value={answer}>{answer}</IncorrectAnswer>
+          <IncorrectAnswer value={answer} onClick={answerHandler}>{answer}</IncorrectAnswer>
         );
       })}
     </AnswersDiv>
+    <Points>Points: {pointsTally}</Points>
   </GameDiv>
 </BackgroundDiv>
 </Wrapper>
     )
 }
+
+const Points = styled.div`
+color: white;
+margin-left: 90%;
+font-family: var(--test-font);
+font-size: 25px;
+width: 100%;
+`
 const QuestionIndex = styled.div`
   font-family: var(--header-font-family);
   font-size: 30px;
@@ -71,6 +71,9 @@ const IncorrectAnswer = styled.button`
   font-family: var(--secondary-font-family);
   font-size: 25px;
   cursor: pointer;
+  &:focus{
+    background: rgba(255,204,14,0.3);
+  }
 `;
 const CorrectAnswer = styled.button`
   display: flex;
@@ -85,6 +88,9 @@ const CorrectAnswer = styled.button`
   cursor: pointer;
   font-family: var(--secondary-font-family);
   font-size: 25px;
+  &:focus{
+    background: rgba(255,204,14,0.3);
+  }
 `;
 const QuestionDiv = styled.div`
   height: 30%;

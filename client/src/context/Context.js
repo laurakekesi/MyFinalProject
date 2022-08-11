@@ -7,6 +7,8 @@ export const ContextProvider = ({children}) => {
 const [allPosts, setAllPosts] = useState(null);
 const [allUsers, setAllUsers] = useState(null);
 const [loggedInUser, setLoggedInUser] = useState(null);
+const [pointsTally, setPointsTally] = useState(0);
+const [selectedAnswer, setSelectedAnswer] = useState(null);
 const { user: currentUser, isAuthenticated, isLoading } = useAuth0();
 
  //fetches all posts and sets allPosts
@@ -29,7 +31,8 @@ useEffect(() => {
     .catch((err) => console.log("err", err))
 }, [])
 
-
+//if isAuthenticated, takes the logged in user's email, and puts it in a fetch to get that same user
+//from mongo, and setLoggedInUser to that user's data.
 useEffect(() => {
     if(isAuthenticated){
     fetch(`/api/userByEmail/${currentUser.email}`)
@@ -43,23 +46,12 @@ useEffect(() => {
 
 
 
-console.log(loggedInUser);
-// currentUser =>
-// email: "laurakekesi@gmail.com"
-// email_verified: true
-// family_name: "kekesi"
-// given_name: "laura"
-// locale: "en-GB"
-// name: "laura kekesi"
-// nickname: "laurakekesi"
-// picture: "https://lh3.googleusercontent.com/a-/AFdZucpCEg4xzRjY0yPeTkOmJxVPzC86tbjGlwSYPADoSw=s96-c"
-// sub: "google-oauth2|114732156286624958710"
-// updated_at: "2022-08-10T15:59:56.002Z"
-
 
 
     return(
-       <Context.Provider value={{ allPosts, setAllPosts, allUsers, currentUser, loggedInUser}}>
+       <Context.Provider value={{ allPosts, setAllPosts, allUsers, currentUser, loggedInUser,
+        pointsTally, setPointsTally, selectedAnswer, setSelectedAnswer
+       }}>
            {children}
        </Context.Provider>
     )

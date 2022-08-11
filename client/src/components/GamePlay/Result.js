@@ -1,53 +1,64 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { Context } from "../../context/Context";
 
-const Result = ({triviaIndex, shuffledAnswers, correctAnswer, currentQuestion}) => {
-    // let currentQuestion = triviaQuestions[triviaIndex];
-    // const createAnswersArray = () => {
-    //   //incorrect & correct answers are stored in different keys in API, this function
-    //   //puts them all together in one array and jumbles them (so that the correct answer
-    //   //isn't always the first option) 
-    //   let answersArray = [];
-    //   answersArray.push(currentQuestion.correctAnswer);
-    //   currentQuestion.incorrectAnswers.forEach((answer) =>
-    //     answersArray.push(answer)
-    //   );
-    //   //shuffles the answers array
-    //   const shuffled = answersArray.sort(() => {
-    //     return Math.random() - 0.5;
-    //   });
-    //   return shuffled;
-    // };
+const Result = ({
+  triviaIndex,
+  shuffledAnswers,
+  correctAnswer,
+  currentQuestion,
+}) => {
+  const { selectecAnswer, pointsTally, setPointsTally } = useContext(Context);
+  
+  const pointsHandler = () => {
+    let numOfPoints = 0;
+    if (selectecAnswer === correctAnswer) {
+      if (currentQuestion.difficulty === "easy") {
+        numOfPoints = 20;
+      }
+      if (currentQuestion.difficulty === "medium") {
+        numOfPoints = 30;
+      }
+      if (currentQuestion.difficulty === "easy") {
+        numOfPoints = 50;
+      }
+    } 
+    setPointsTally(pointsTally + numOfPoints);
+  };
 
-    // const shuffledAnswers = createAnswersArray();
-    // const correctAnswer = currentQuestion.correctAnswer;
+  pointsHandler();
+  return (
+    <Wrapper>
+      <BackgroundDiv>
+        <GameDiv>
+          <TimerDiv></TimerDiv>
+          <QuestionDiv>
+            <QuestionIndex>{triviaIndex + 1}/20</QuestionIndex>
+            <div>{currentQuestion.question}</div>
+          </QuestionDiv>
+          <AnswersDiv>
+            {shuffledAnswers.map((answer) => {
+              return answer === correctAnswer ? (
+                <CorrectAnswer value={answer}>{answer}</CorrectAnswer>
+              ) : (
+                <IncorrectAnswer value={answer}>{answer}</IncorrectAnswer>
+              );
+            })}
+          </AnswersDiv>
+          <Points>Points: {pointsTally}</Points>
+        </GameDiv>
+      </BackgroundDiv>
+    </Wrapper>
+  );
+};
 
-    console.log("PAUSE");
-
-    return(
-<Wrapper>
-
-<BackgroundDiv>
-  <GameDiv>
-    <TimerDiv>
-    </TimerDiv>
-    <QuestionDiv>
-      <QuestionIndex>{triviaIndex + 1}/20</QuestionIndex>
-      <div>{currentQuestion.question}</div>
-    </QuestionDiv>
-    <AnswersDiv>
-      {shuffledAnswers.map((answer) => {
-        return answer === correctAnswer ? (
-          <CorrectAnswer value={answer}>{answer}</CorrectAnswer>
-        ) : (
-          <IncorrectAnswer value={answer}>{answer}</IncorrectAnswer>
-        );
-      })}
-    </AnswersDiv>
-  </GameDiv>
-</BackgroundDiv>
-</Wrapper>
-    )
-}
+const Points = styled.div`
+  color: white;
+  margin-left: 90%;
+  font-family: var(--test-font);
+  font-size: 25px;
+  width: 100%;
+`;
 const QuestionIndex = styled.div`
   font-family: var(--header-font-family);
   font-size: 30px;
@@ -66,8 +77,8 @@ const IncorrectAnswer = styled.button`
   height: 40%;
   width: 45%;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.5);
-  border: #ed2863 4px solid;
+  background: rgba(247, 153, 178, 0.3);
+  border: #f799b2 4px solid;
   font-family: var(--secondary-font-family);
   font-size: 25px;
   cursor: pointer;
@@ -81,6 +92,7 @@ const CorrectAnswer = styled.button`
   border-radius: 10px;
   background: pink;
   border: #c8ff8e 4px solid;
+  background: rgba(184, 249, 152, 0.3);
   cursor: pointer;
   font-family: var(--secondary-font-family);
   font-size: 25px;
@@ -130,6 +142,6 @@ const Wrapper = styled.div`
 
   /* added in because of navbar stuff */
   /* padding-top: 70px; */
-`
+`;
 
 export default Result;
