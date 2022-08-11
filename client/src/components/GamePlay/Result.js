@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Context } from "../../context/Context";
 
@@ -9,31 +9,27 @@ const Result = ({
   currentQuestion,
 }) => {
   const { selectedAnswer, pointsTally, setPointsTally,} = useContext(Context);
- let numOfPoints;
-  
+
   const pointsHandler = () => {
    if (selectedAnswer === correctAnswer){
       if (currentQuestion.difficulty === "easy") {
-        // numOfPoints = 20;
         setPointsTally(pointsTally + 20);
       }
       else if (currentQuestion.difficulty === "medium") {
-        // numOfPoints = 30;
         setPointsTally(pointsTally + 30);
       }
-      else {
+      else{
         setPointsTally(pointsTally + 50);
-        // numOfPoints = 50;
       }
-
-      // setPointsTally(pointsTally + 1);
-
    }
-    // setPointsTally(pointsTally + numOfPoints);
-    // console.log(setPointsTally);
+
   };
 
+// calls the pointsHandler function only once if the triviaIndex/current question is updated
+useEffect(()=>{
   pointsHandler();
+},[triviaIndex,currentQuestion])
+
   return (
     <Wrapper>
       <BackgroundDiv>
