@@ -8,22 +8,21 @@ import Profile from "./Profile";
 import Login from "./Auth0/Login";
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import Loading from "./Loading";
+import Error from "./Error";
 
 
 const App = () => {
-  const {
-    isLoading,
-    isAuthenticated,
-    error,
-    user,
-    loginWithRedirect,
-    logout,
-  } = useAuth0();
+  // const {
+  //   isLoading,
+  //   isAuthenticated,
+  //   error,
+  //   user,
+  //   loginWithRedirect,
+  //   logout,
+  // } = useAuth0();
 
-  return (
-   
+  return (  
     <BrowserRouter>
-    {/* <Login/> */}
     <GlobalStyles/>
     <Wrapper>
     <Navbar/>
@@ -36,6 +35,9 @@ const App = () => {
         </Route>
         <Route path = '/play'>
           <GamePlay/>
+        </Route>
+        <Route path = '/error'>
+          <Error/>
         </Route>
       </Switch>
     </Wrapper>
