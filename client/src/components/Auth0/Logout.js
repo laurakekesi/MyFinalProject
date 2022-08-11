@@ -9,10 +9,11 @@ const Logout = () => {
     <Container>
     <Button onClick={() => logout({ returnTo: window.location.origin })}>
       👋 
-    </Button>
+    
     <Overlay>
     <Text>Log Out</Text>
     </Overlay>
+    </Button>
     </Container>
   );
 };
