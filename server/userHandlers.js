@@ -88,11 +88,33 @@ const updateBestSubject = async(req, res) => {
   }
 }
 
+const updateCorrectAnswers = async(req,res) => {
+const client = new MongoClient(MONGO_URI, options);
+try {
+  await client.connect();
+  const db = client.db("myFinalProject");
+  const _id = req.body.userId;
+  const bodyCategory = req.body.category;
+  const query = ({_id: ObjectId(_id)});
+  const userToUpdate  = await db.collection("users_data").findOne({_id: ObjectId(_id)});
+  if (userToUpdate) {
+    const categoryToUpdate = userToUpdate.correctAnswers.bodyCategory;
+  }
+  
+  
+
+}
+catch {
+  res.status(500).json({status: 500, message: "Server error!"});
+}
+}
+
 
 module.exports = {
   getUsers,
   getUserById,
   getUserByEmail,
   updateHighScore,
-  updateBestSubject
+  updateBestSubject,
+  updateCorrectAnswers
 };

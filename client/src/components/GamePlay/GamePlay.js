@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Play from "./Play";
 import Result from "./Result";
 import Loading from "../Loading";
-import TimerBar from "../TimerBar";
 import { Context } from "../../context/Context";
 
 const GamePlay = () => {
@@ -11,8 +10,9 @@ const GamePlay = () => {
   const [triviaIndex, setTriviaIndex] = useState(null);
   const [gameState, setGameState] = useState("pause");
   const {setPointsTally} = useContext(Context);
-  const shuffledAnswers = [];
+  const [shuffledAnswers, setShuffledAnswers] = useState([])
   
+  //sets the points back to 0 at the beginning of every game.
   if (gameState === "pause"){
     setPointsTally(0);
   }
@@ -24,13 +24,10 @@ const GamePlay = () => {
         setTriviaQuestions(data.data);
         //when data is fetched, sets triviaIndex && pointsTally to 0, beginning the game
         setTriviaIndex(0);
-        console.log("check answer",setTriviaIndex);
-        // console.log("Use effect", data.data);
+        // console.log("check answer",setTriviaIndex);
       })
       .catch((err) => console.log("err", err));
   }, []);
-
- 
 
   useEffect(() => {
     //when triviaIndex is changed, game state is set to play for 15 seconds
@@ -52,14 +49,8 @@ const GamePlay = () => {
     
   }, [triviaIndex]);
 
-  if (triviaQuestions && triviaIndex >=0) {
-
- 
-  const currentQuestion = triviaQuestions[triviaIndex];
-
-  
   const createAnswersArray = () => {
-    // const shuffledAnswersArray=[]
+    const currentQuestion = triviaQuestions[triviaIndex];
     //incorrect & correct answers are stored in different keys in API, this function
     //puts them all together in one array and jumbles them (so that the correct answer
     //isn't always the first option) 
@@ -73,15 +64,23 @@ const GamePlay = () => {
       return Math.random() - 0.5;
     });
 
-    shuffled.forEach((question) => shuffledAnswers.push(question))
-    // setShuffledAnswers(shuffledAnswersArray)
+    setShuffledAnswers([...shuffled])
+
   };
 
-createAnswersArray();
-const correctAnswer = currentQuestion.correctAnswer;
-
-
-  if (triviaQuestions && gameState === "play" && shuffledAnswers) {
+  //calls the createAnswersArray one time, so both the Play and Result components get the shuffled
+  //answers in the same order.
+useEffect(()=>{
+  if (triviaQuestions && triviaIndex >=0) {
+    createAnswersArray();
+    }
+  
+},[triviaQuestions, triviaIndex])
+  
+if (triviaQuestions && triviaIndex >=0){
+  const currentQuestion = triviaQuestions[triviaIndex];
+  const correctAnswer = currentQuestion.correctAnswer;
+  if (gameState === "play" ) {
     return (
       <Wrapper>
         <Play triviaIndex = {triviaIndex} 
@@ -112,92 +111,12 @@ const correctAnswer = currentQuestion.correctAnswer;
     )
   }
 };
-// const Question = styled.div`
-// display: flex;
-// justify-content: center;
-// width: 100%;
-// padding: 15px;
-// `
-// const QuestionIndex = styled.div`
-//   font-family: var(--header-font-family);
-//   font-size: 30px;
-//   margin-bottom: 10px;
-// `;
 
-// const TimerDiv = styled.div`
-//   height: 15%;
-//   display: flex;
-//   align-items: center;
-// `;
-// const IncorrectAnswer = styled.button`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 40%;
-//   width: 45%;
-//   border-radius: 10px;
-//   background: rgba(255, 255, 255, 0.5);
-//   border: var(--orangey-yellow) 4px solid;
-//   font-family: var(--secondary-font-family);
-//   font-size: 25px;
-//   cursor: pointer;
-// `;
-// const CorrectAnswer = styled.button`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 40%;
-//   width: 45%;
-//   border-radius: 10px;
-//   /* background: rgba(255,255,255,0.5); */
-//   background: pink;
-//   border: var(--orangey-yellow) 4px solid;
-//   cursor: pointer;
-//   font-family: var(--secondary-font-family);
-//   font-size: 25px;
-// `;
-// const QuestionDiv = styled.div`
-//   height: 30%;
-//   border-radius: 10px;
-//   background: rgba(255, 255, 255, 0.5);
-//   border: var(--orangey-yellow) 4px solid;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   font-size: 25px;
-// `;
-// const AnswersDiv = styled.div`
-//   height: 50%;
-//   column-count: 2;
-//   display: flex;
-//   flex-direction: column;
-//   flex-wrap: wrap;
-//   justify-content: center;
-//   align-items: center;
-//   gap: 15px;
-// `;
-// const GameDiv = styled.div`
-//   width: 85%;
-//   height: 90%;
-//   font-family: var(--secondary-font-family);
-// `;
-// const BackgroundDiv = styled.div`
-//   width: 85%;
-//   height: 85%;
-//   background: rgba(172, 216, 210, 0.5);
-//   border-radius: 15px;
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-// `;
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 90%;
-
-  /* added in because of navbar stuff */
   padding-top: 70px;
 `;
 export default GamePlay;

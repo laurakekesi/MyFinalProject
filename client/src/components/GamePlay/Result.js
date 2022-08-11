@@ -12,20 +12,25 @@ const Result = ({
  let numOfPoints;
   
   const pointsHandler = () => {
-   
+   if (selectedAnswer === correctAnswer){
       if (currentQuestion.difficulty === "easy") {
-        numOfPoints = 20;
+        // numOfPoints = 20;
+        setPointsTally(pointsTally + 20);
       }
       else if (currentQuestion.difficulty === "medium") {
-        numOfPoints = 30;
+        // numOfPoints = 30;
+        setPointsTally(pointsTally + 30);
       }
       else {
-        numOfPoints = 50;
+        setPointsTally(pointsTally + 50);
+        // numOfPoints = 50;
       }
 
-    
-    setPointsTally(pointsTally + numOfPoints);
-    console.log(setPointsTally);
+      // setPointsTally(pointsTally + 1);
+
+   }
+    // setPointsTally(pointsTally + numOfPoints);
+    // console.log(setPointsTally);
   };
 
   pointsHandler();

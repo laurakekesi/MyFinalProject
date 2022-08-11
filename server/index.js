@@ -6,7 +6,8 @@ const { getUsers,
   getUserById,
   getUserByEmail,
   updateHighScore,
-  updateBestSubject
+  updateBestSubject,  
+  updateCorrectAnswers
 } = require("./userHandlers");
 const { getPosts, 
   getPostById, 
@@ -37,8 +38,6 @@ express()
     next();
   })
 
-//  Auth0 configuration data  //***** NOT DONE ******/
-
 
     .use(morgan("tiny"))
     .use(express.static("public"))
@@ -54,9 +53,10 @@ express()
 //User endpoints
 .get('/api/users', getUsers) //gets an array of all user objects
 .get('/api/user/:userId', getUserById) //gets specific user object by id
+.get('/api/userByEmail/:userEmail', getUserByEmail) //gets specific user object by email
 .patch('/api/highScore/:userId', updateHighScore) //updates user's high score.
 .patch('/api/bestSubject/:userId', updateBestSubject) //updates user's top subject.
-.get('/api/userByEmail/:userEmail', getUserByEmail) //gets specific user object by id
+.patch('/api/correctAnswers', updateCorrectAnswers) //updates user's correctAnswers object
 
 //Post endpoints
 .get('/api/posts', getPosts)//gets all posts
@@ -72,8 +72,6 @@ express()
 
 // //Trivia endpoint
 .get('/api/triviaQuestions', getTriviaQuestions) //gets 20 random question from (https://the-trivia-api.com/)
-
-// //Auth0 endpoint?
 
 
 .listen(PORT, () => {
