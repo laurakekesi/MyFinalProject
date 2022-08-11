@@ -8,7 +8,7 @@ const Result = ({
   correctAnswer,
   currentQuestion,
 }) => {
-  const { selectedAnswer, pointsTally, setPointsTally,} = useContext(Context);
+  const { selectedAnswer, pointsTally, setPointsTally, loggedInUser} = useContext(Context);
 
   const pointsHandler = () => {
    if (selectedAnswer === correctAnswer){
@@ -25,9 +25,25 @@ const Result = ({
 
   };
 
-// calls the pointsHandler function only once if the triviaIndex/current question is updated
+//calls the pointsHandler function and correctAnswers patch only once if the 
+//triviaIndex/current question is updated
 useEffect(()=>{
   pointsHandler();
+  //if the user selected the correct answer, the corresponding category in their user object
+  //is updated by 1, allowing for their best subject to be calculated (the category with the
+  //most questions answered )
+  if (selectedAnswer === correctAnswer) {
+  fetch('/api/correctAnswers', {
+    method: "PATCH",
+    headers: {"Content-Type" : "application/json "},
+    body: JSON.stringify({
+      _id: loggedInUser._id,
+      category: currentQuestion.category
+    })})
+    .then((res) => res.json())
+    .then((data) => console.log(`${currentQuestion.category} updated`, data))
+    .catch((err) => console.log("Error", err))
+  }
 },[triviaIndex,currentQuestion])
 
   return (
