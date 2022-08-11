@@ -5,21 +5,13 @@ import styled from "styled-components";
 import Homefeed from "./Homefeed";
 import GamePlay from "./GamePlay/GamePlay"
 import Profile from "./Profile";
-import Login from "./Auth0/Login";
 import { useAuth0, withAuthenticationRequired } from '@auth0/auth0-react';
 import Loading from "./Loading";
 import Error from "./Error";
+import GameOver from "./GamePlay/GameOver";
 
 
 const App = () => {
-  // const {
-  //   isLoading,
-  //   isAuthenticated,
-  //   error,
-  //   user,
-  //   loginWithRedirect,
-  //   logout,
-  // } = useAuth0();
 
   return (  
     <BrowserRouter>
@@ -38,6 +30,9 @@ const App = () => {
         </Route>
         <Route path = '/error'>
           <Error/>
+        </Route>
+        <Route path = '/gameover'>
+          <GameOver/>
         </Route>
       </Switch>
     </Wrapper>

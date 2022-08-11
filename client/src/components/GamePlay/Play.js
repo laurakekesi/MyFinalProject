@@ -133,9 +133,6 @@ const Wrapper = styled.div`
   align-items: center;
   height: 90%;
   width: 100%;
-
-  /* added in because of navbar stuff */
-  /* padding-top: 70px; */
 `
 
 export default Play;

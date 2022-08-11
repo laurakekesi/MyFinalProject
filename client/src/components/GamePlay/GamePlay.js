@@ -4,6 +4,7 @@ import Play from "./Play";
 import Result from "./Result";
 import Loading from "../Loading";
 import { Context } from "../../context/Context";
+import GameOver from "./GameOver";
 
 const GamePlay = () => {
   const [triviaQuestions, setTriviaQuestions] = useState(null);
@@ -101,6 +102,14 @@ if (triviaQuestions && triviaIndex >=0){
     </Wrapper>
     );
   }
+  if (gameState === "gameOver") {
+    return(
+      <Wrapper>
+        <GameOver/>
+      </Wrapper>
+    )
+  }
+
 }
   else {
     return (
