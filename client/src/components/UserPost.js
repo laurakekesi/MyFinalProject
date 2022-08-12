@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { Context } from "../context/Context";
 
 const UserPost = ({ post, user }) => {
     const numHearts = post.numHearts;
     const numPoos = post.numPoos;
     const [isHearted, setIsHearted] = useState(false);
     const [isPooed, setIsPooed] = useState(false);
+    const {loggedInUser} = useContext(Context);
 
 //deletes the post using the post id
     const deletePost = (e)=> {
@@ -81,7 +83,8 @@ const UserPost = ({ post, user }) => {
 
   return (
     <Wrapper to={`/profile/${post.userId}`}>
-      <DeletePost onClick={deletePost}>x</DeletePost>
+      {user._id === loggedInUser._id? <DeletePost onClick={deletePost}>x</DeletePost>: <DeletePost></DeletePost>}
+      
       <PersonInfo>
         <Img src={user.avatarSrc} alt="avatar" />
         <Column>

@@ -62,7 +62,7 @@ const Profile = () => {
                 <PostsByPerson>
                     <Div>Posts by {user.firstName}</Div>
                     <PostContainer>
-                    {userPosts.map((post) => {
+                    {userPosts.reverse().map((post) => {
                         return (
                             <PostDiv>
                             <UserPost post={post} user={user}/>
