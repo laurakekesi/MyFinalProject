@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Context } from "../../context/Context";
 import Loading from "../Loading";
@@ -8,39 +8,26 @@ import NewHighScore from "./GameOverStates/NewHighScore";
 import { useHistory } from "react-router-dom";
 
 const GameOver = () => {
-  const { pointsTally, loggedInUser, gameOVerState, gameOverHandler, reloadPage, goHome } =
+  const { pointsTally, loggedInUser, gameOverState, gameOverHandler } =
     useContext(Context);
-    
-    // const history = useHistory();
 
-    // const reloadPage = () => {
-    //     window.location.reload();
-    // }
+  const history = useHistory();
 
-    // const goHome = () => {
-    //     history.push('/')
-    // }
+  const reloadPage = () => {
+    window.location.reload();
+  };
 
-  // 📱 post it
-  // 🏡 take me home
-  // 🎉 play again
+  const goHome = () => {
+    history.push("/");
+  };
 
-  // pass down game state, && gamestate === gameOver?
-  if (loggedInUser) {
-    // gameOverHandler()
-  }
 
-  //<div> that says You have a new best subject/highscore/both! Want us to post it?
-  //3 buttons: 1) "Yeah lets do it" (onclick, creates a post with a pre-determined value)
-  //2) No thanks, let's play again! (onclick, window.location.reload())
-  //3) No thanks, take me home with home emoji, (onclick, history.push('/'))
-
-  //else Want to play again?
-  //2 buttons "Let's do it!" Window.reload(), "No thanks" push.history('/')
+gameOverHandler();
+console.log(gameOverState);
 
   //depending on what state the game ends on, a different message will appear, and options to post a
   //predetermined message depending on the user's achievements.
-//   if (gameOVerState === "newBoth") {
+  if (gameOverState === "newBoth") {
     return (
       <Wrapper>
         <BackgroundDiv>
@@ -53,100 +40,95 @@ const GameOver = () => {
         </BackgroundDiv>
       </Wrapper>
     );
-//   } else if (gameOVerState === "newBestSubject") {
-
-    // return (
-    //   <Wrapper>
-    //     <BackgroundDiv>
-    //       <SecondaryBackDiv>
-    //         <TopMessage>Congrats! You scored {pointsTally} points!</TopMessage>
-    //         <BottomMessage>
-    //           <NewBestSub />
-    //         </BottomMessage>
-    //       </SecondaryBackDiv>
-    //     </BackgroundDiv>
-    //   </Wrapper>
-    // );
-//   } else if (gameOVerState === "newHighScore") {
-
-//     return (
-//       <Wrapper>
-//         <BackgroundDiv>
-//           <SecondaryBackDiv>
-//             <TopMessage>Congrats! You scored {pointsTally} points!</TopMessage>
-//             <BottomMessage>
-//               <NewHighScore />
-//             </BottomMessage>
-//           </SecondaryBackDiv>
-//         </BackgroundDiv>
-//       </Wrapper>
-//     );
-//   }
-    //   } else if (gameOVerState === "noNewTops")
-    // return (
-    //   <Wrapper>
-    //     <BackgroundDiv>
-    //       <SecondaryBackDiv>
-    //         <TopMessage>Congrats! You scored {pointsTally} points!</TopMessage>
-    //         <BottomMessage>
-    //           <PlayAgain>Play again?</PlayAgain>
-    //           <ButtonsDiv>
-    //             <Container>
-    //               <Button onClick={reloadPage}>
-    //               🎉 
-    //                 <Overlay>
-    //                   <Text>Let's do it!</Text>
-    //                 </Overlay>
-    //               </Button>
-    //             </Container>
-    //             <Container>
-    //               <Button onClick={goHome}>
-    //               🏡
-    //                 <Overlay>
-    //                   <Text>No Thanks!</Text>
-    //                 </Overlay>
-    //               </Button>
-    //             </Container>
-    //           </ButtonsDiv>
-    //         </BottomMessage>
-    //       </SecondaryBackDiv>
-    //     </BackgroundDiv>
-    //   </Wrapper>
-    // );
-
-  //   else {
-  //     return (
-  //       <Wrapper>
-  //         <Loading />
-  //       </Wrapper>
-  //     );
-  //   }
-    }
-// };
+  } else if (gameOverState === "newBestSubject") {
+    return (
+      <Wrapper>
+        <BackgroundDiv>
+          <SecondaryBackDiv>
+            <TopMessage>Congrats! You scored {pointsTally} points!</TopMessage>
+            <BottomMessage>
+              <NewBestSub />
+            </BottomMessage>
+          </SecondaryBackDiv>
+        </BackgroundDiv>
+      </Wrapper>
+    );
+  } else if (gameOverState === "newHighScore") {
+    return (
+      <Wrapper>
+        <BackgroundDiv>
+          <SecondaryBackDiv>
+            <TopMessage>Congrats! You scored {pointsTally} points!</TopMessage>
+            <BottomMessage>
+              <NewHighScore />
+            </BottomMessage>
+          </SecondaryBackDiv>
+        </BackgroundDiv>
+      </Wrapper>
+    );
+  } else if (gameOverState === "noNewTops")
+    return (
+      <Wrapper>
+        <BackgroundDiv>
+          <SecondaryBackDiv>
+            <TopMessage>Congrats! You scored {pointsTally} points!</TopMessage>
+            <BottomMessage>
+              <PlayAgain>Play again?</PlayAgain>
+              <ButtonsDiv>
+                <Container>
+                  <Button onClick={reloadPage}>
+                    🎉
+                    <Overlay>
+                      <Text>Let's do it!</Text>
+                    </Overlay>
+                  </Button>
+                </Container>
+                <Container>
+                  <Button onClick={goHome}>
+                    🏡
+                    <Overlay>
+                      <Text>No Thanks!</Text>
+                    </Overlay>
+                  </Button>
+                </Container>
+              </ButtonsDiv>
+            </BottomMessage>
+          </SecondaryBackDiv>
+        </BackgroundDiv>
+      </Wrapper>
+    );
+  else {
+    return (
+      <Wrapper>
+        <Loading />
+      </Wrapper>
+    );
+  }
+};
 
 const Overlay = styled.div`
   position: absolute;
-  /* right: 5px; */
+
   left: -10px;
- top: -10px;
+  top: -10px;
   height: 70px;
   width: 70px;
   opacity: 0;
-  transition: .5s ease;
+  transition: 0.5s ease;
   background-color: rgba(255, 125, 158, 0.5);
   border-radius: 50%;
 
-  &:hover{
+  &:hover {
     opacity: 1;
   }
 
   cursor: pointer;
-`
+`;
 const Container = styled.span`
   position: relative;
   width: 30%;
- margin-left: 150px;
-`
+  margin-left: 150px;
+`;
 
 const Text = styled.span`
   color: white;
@@ -159,13 +141,13 @@ const Text = styled.span`
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   text-align: center;
-`
+`;
 const Button = styled.button`
-background: none;
-border: none;
-font-size: 40px;
-cursor: pointer;
-`
+  background: none;
+  border: none;
+  font-size: 40px;
+  cursor: pointer;
+`;
 const ButtonsDiv = styled.div`
   display: flex;
   margin-top: 50px;

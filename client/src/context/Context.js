@@ -50,6 +50,7 @@ useEffect(() => {
 }, [currentUser])
 
 const gameOverHandler = () => {
+    if (loggedInUser){
     //maps over all the values in the correctAnswers object, and if any of them have a higher 
     //value than the current bestSubject's value, the bestSubject is replaced by the the new category 
     //that holds the higher value.
@@ -129,6 +130,7 @@ const gameOverHandler = () => {
     else {
     setGameOverState("noNewTops")
     }
+}
     }
 
 
