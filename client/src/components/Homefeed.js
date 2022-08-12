@@ -6,9 +6,20 @@ import UserPost from "./UserPost";
 import { useHistory } from "react-router-dom"; 
 
 const Homefeed = () => {
-  const { loggedInUser, allPosts, setAllPosts, allUsers } = useContext(Context);
+  const { loggedInUser, allUsers, allPosts, setAllPosts } = useContext(Context);
   const [isDisabled, setIsDisabled] = useState(true);
+
   const history = useHistory();
+
+
+  useEffect(() => {
+    fetch('/api/posts')
+    .then((res) => res.json())
+    .then((data) => {
+        setAllPosts(data.data.reverse());
+    })
+    .catch((err) => history.push('/error'))
+}, [])
 
 //If there is nothing in the textarea, this function disables the submit button,
 //not allowing the user to post.

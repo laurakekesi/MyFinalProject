@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 export const Context = createContext();
 
 export const ContextProvider = ({children}) => {
-const [allPosts, setAllPosts] = useState(null);
+// const [allPosts, setAllPosts] = useState(null);
 const [allUsers, setAllUsers] = useState(null);
 const [loggedInUser, setLoggedInUser] = useState(null);
 const [pointsTally, setPointsTally] = useState(0);
@@ -13,19 +13,21 @@ const [selectedAnswer, setSelectedAnswer] = useState(null);
 const [shuffledAnswers, setShuffledAnswers] = useState(null);
 const [gameOverState, setGameOverState] = useState(null);
 const [bestSub, setBestSub] = useState("test");
+const [allPosts, setAllPosts] = useState(null);
 const history = useHistory();
+
 
 const { user: currentUser, isAuthenticated, isLoading } = useAuth0();
 
  //fetches all posts and sets allPosts
-useEffect(() => {
-    fetch('/api/posts')
-    .then((res) => res.json())
-    .then((data) => {
-        setAllPosts(data.data.reverse());
-    })
-    .catch((err) => console.log("err", err))
-}, [])
+// useEffect(() => {
+//     fetch('/api/posts')
+//     .then((res) => res.json())
+//     .then((data) => {
+//         setAllPosts(data.data.reverse());
+//     })
+//     .catch((err) => console.log("err", err))
+// }, [])
 
 //fetches all users and sets allUsers 
 useEffect(() => {

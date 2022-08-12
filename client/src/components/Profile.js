@@ -23,7 +23,7 @@ const Profile = () => {
     .catch((err) => {
     // console.log("err", err);
     history.push("/error")})
-    }, [])
+    }, [profileId])
 
     //fetches user posts based on their id in params.
     useEffect(() => {
@@ -35,7 +35,7 @@ const Profile = () => {
     .catch((err) => {
         console.log("err", err);
         history.push("/error")})
-    }, []);
+    }, [profileId]);
 
 
 

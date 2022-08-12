@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Context } from "../context/Context";
 
@@ -7,6 +7,7 @@ const UserPost = ({ post, user }) => {
   const [isHearted, setIsHearted] = useState(false);
   const [isPooed, setIsPooed] = useState(false);
   const {loggedInUser} = useContext(Context);
+  const history = useHistory();
 
   if (post && user && loggedInUser) {
     const numHearts = post.numHearts;
@@ -19,7 +20,6 @@ const UserPost = ({ post, user }) => {
         method: "DELETE"
       })
       .then((res) => res.json())
-      .then((data) => console.log(data))
       .catch((err) => console.log(err))
       window.location.reload();
     }
@@ -30,24 +30,16 @@ const UserPost = ({ post, user }) => {
       fetch(`/api/post/incrementHearts/${post._id}`, {
         method: "PATCH",
       })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("Hearts incremented!", data);
-        })
-        .catch((error) => {
-          console.error("Error:", error);
+        .catch((err) => {
+          history.push('/error');
         });
       setIsHearted(true);
     } else {
       fetch(`/api/post/decrementHearts/${post._id}`, {
         method: "PATCH",
       })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("Hearts decremented!", data);
-        })
         .catch((error) => {
-          console.error("Error:", error);
+          history.push('/error');
         });
       setIsHearted(false);
     }

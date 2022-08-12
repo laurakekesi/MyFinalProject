@@ -4,40 +4,42 @@ import { Context } from "../../../context/Context";
 import { useHistory } from "react-router-dom";
 
 const NewHighScore = () => {
+  const { reloadPage, loggedInUser, pointsTally, setAllPosts } = useContext(Context);
+  const [isPosted, setIsPosted] = useState("Post it!");
+  const history = useHistory();
 
-    const {reloadPage, loggedInUser, pointsTally} = useContext(Context);
-    const [isPosted, setIsPosted] = useState("Post it!");
-    const history = useHistory;
+  const goHome = () => {
+    history.push("/");
+  };
 
-    const goHome = () => {
-        history.push('/')
-    }
-
-    const postHighScore = () => {
-        const userId = loggedInUser._id;
-        fetch('/api/posts', {
-            method: "POST",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({
-                userId: userId,
-                postContent: `I have a new high score! ${pointsTally} points!`
-            })
-        })
-        .then(setIsPosted("Posted!"))
-        .then(history.push('/'))
-        // Get home page to reload so posts show?
-        //Get page to actually push?
-        .catch((err) => console.log(err))
-
-
-    }
+  const postHighScore = () => {
+    const userId = loggedInUser._id;
+    fetch("/api/posts", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: userId,
+        postContent: `I have a new high score! ${pointsTally} points!`,
+      }),
+    })
+      .then(() => {
+        setIsPosted("Posted!");
+        fetch("/api/posts")
+          .then((res) => res.json())
+          .then((data) => {
+            setAllPosts(data.data.reverse());
+          })
+          .then(history.push("/"));
+      })
+      .catch((err) => history.push("/error"));
+  };
   return (
     <Wrapper>
       <PlayAgain>That's a new high score! Want us to post it?</PlayAgain>
       <ButtonsDiv>
         <Container>
           <Button onClick={postHighScore}>
-          📱
+            📱
             <Overlay>
               <Text>{isPosted}</Text>
             </Overlay>

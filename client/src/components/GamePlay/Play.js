@@ -26,11 +26,11 @@ const Play = ({triviaIndex, correctAnswer, currentQuestion, shuffledAnswers}) =>
       <div>{currentQuestion.question}</div>
     </QuestionDiv>
     <AnswersDiv>
-      {shuffledAnswers.map((answer) => {
+      {shuffledAnswers.map((answer, index) => {
         return answer === correctAnswer ? (
-          <CorrectAnswer value={answer} onClick={answerHandler}>{answer}</CorrectAnswer>
+          <CorrectAnswer value={answer} onClick={answerHandler} key={`correctAnswer-${index}`}>{answer}</CorrectAnswer>
         ) : (
-          <IncorrectAnswer value={answer} onClick={answerHandler}>{answer}</IncorrectAnswer>
+          <IncorrectAnswer value={answer} onClick={answerHandler} key={`correctAnswer-${index}`}>{answer}</IncorrectAnswer>
         );
       })}
     </AnswersDiv>

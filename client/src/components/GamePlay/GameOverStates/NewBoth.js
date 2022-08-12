@@ -119,6 +119,7 @@ const PlayAgain = styled.div`
   font-family: var(--test-font);
   font-size: 30px;
   margin-top: 40px;
+  text-align: center;
 `;
 
 const Wrapper = styled.div`

@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 const NewBestSub = () => {
 
-    const {reloadPage, loggedInUser, bestSub} = useContext(Context);
+    const {reloadPage, loggedInUser, bestSub, allPosts, setAllPosts} = useContext(Context);
     const [isPosted, setIsPosted] = useState("Post it!");
     const history = useHistory();
 
@@ -23,11 +23,16 @@ const NewBestSub = () => {
                 postContent: `I have a new best subject! ${bestSub}!`
             })
         })
-        .then(setIsPosted("Posted!"))
-        .then(history.push('/'))
-        // Get home page to reload so posts show?
-        //Get page to actually push?
-        .catch((err) => console.log(err))
+        .then(()=> {
+        setIsPosted("Posted!")
+        fetch('/api/posts')
+        .then((res) => res.json())
+        .then((data) => {
+            setAllPosts(data.data.reverse());
+        })
+        .then (history.push('/'))
+        })
+        .catch((err) => history.push('/error'))
 
 
     }
@@ -114,6 +119,7 @@ const PlayAgain = styled.div`
   font-family: var(--test-font);
   font-size: 30px;
   margin-top: 40px;
+  text-align: center;
 `;
 
 const Wrapper = styled.div`
