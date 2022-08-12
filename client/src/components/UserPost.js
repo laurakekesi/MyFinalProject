@@ -4,11 +4,13 @@ import styled from "styled-components";
 import { Context } from "../context/Context";
 
 const UserPost = ({ post, user }) => {
+  const [isHearted, setIsHearted] = useState(false);
+  const [isPooed, setIsPooed] = useState(false);
+  const {loggedInUser} = useContext(Context);
+
+  if (post && user && loggedInUser) {
     const numHearts = post.numHearts;
     const numPoos = post.numPoos;
-    const [isHearted, setIsHearted] = useState(false);
-    const [isPooed, setIsPooed] = useState(false);
-    const {loggedInUser} = useContext(Context);
 
 //deletes the post using the post id
     const deletePost = (e)=> {
@@ -107,6 +109,7 @@ const UserPost = ({ post, user }) => {
       </PostStats>
     </Wrapper>
   );
+  }
 };
 
 const DeletePost = styled.button`

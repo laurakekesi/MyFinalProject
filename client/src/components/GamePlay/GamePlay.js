@@ -35,7 +35,7 @@ const GamePlay = () => {
     setTimeout(() => {
       //after 15 seconds, game is set to "result" state for 5 seconds
       //after 5 seconds, if the index is under 19, add a number to index, allowing
-      //the useEffect to repeat all over again but with a new question.
+      //the useEffect to repeat all over again but with a new question. 
       setGameState("result");
       setTimeout(() => {
           if (triviaIndex < 19 ) {
@@ -44,8 +44,8 @@ const GamePlay = () => {
         } else {
             setGameState("gameOver");
         }
-      }, 300)
-    }, 1500);
+      }, 3000)
+    }, 15000);
     
   }, [triviaIndex]);
 
