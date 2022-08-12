@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, } from "react";
 import styled from "styled-components";
 import { Context } from "../../context/Context";
 import { useHistory } from "react-router-dom";
@@ -9,43 +9,42 @@ const Result = ({
   correctAnswer,
   currentQuestion,
 }) => {
-  const { selectedAnswer, pointsTally, setPointsTally, loggedInUser} = useContext(Context);
+  const { selectedAnswer, pointsTally, setPointsTally, loggedInUser } =
+    useContext(Context);
   const history = useHistory();
 
   const pointsHandler = () => {
-   if (selectedAnswer === correctAnswer){
+    if (selectedAnswer === correctAnswer) {
       if (currentQuestion.difficulty === "easy") {
         setPointsTally(pointsTally + 20);
-      }
-      else if (currentQuestion.difficulty === "medium") {
+      } else if (currentQuestion.difficulty === "medium") {
         setPointsTally(pointsTally + 30);
-      }
-      else{
+      } else {
         setPointsTally(pointsTally + 50);
       }
-   }
-
+    }
   };
 
-//calls the pointsHandler function and correctAnswers patch only once if the 
-//triviaIndex/current question is updated
-useEffect(()=>{
-  pointsHandler();
-  //if the user selected the correct answer, the corresponding category in their user object
-  //is updated by 1, allowing for their best subject to be calculated (the category with the
-  //most questions answered )
-  if (selectedAnswer === correctAnswer) {
-  fetch('/api/correctAnswers', {
-    method: "PATCH",
-    headers: {"Content-Type" : "application/json "},
-    body: JSON.stringify({
-      _id: loggedInUser._id,
-      category: currentQuestion.category
-    })})
-    .then((res) => res.json())
-    .catch((err) => history.push("/error"));
-  }
-},[triviaIndex,currentQuestion])
+  //calls the pointsHandler function and correctAnswers patch only once if the
+  //triviaIndex/current question is updated
+  useEffect(() => {
+    pointsHandler();
+    //if the user selected the correct answer, the corresponding category in their user object
+    //is updated by 1, allowing for their best subject to be calculated (the category with the
+    //most questions answered )
+    if (selectedAnswer === correctAnswer) {
+      fetch("/api/correctAnswers", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json " },
+        body: JSON.stringify({
+          _id: loggedInUser._id,
+          category: currentQuestion.category,
+        }),
+      })
+        .then((res) => res.json())
+        .catch((err) => history.push("/error"));
+    }
+  }, [triviaIndex, currentQuestion]);
 
   return (
     <Wrapper>
@@ -57,11 +56,15 @@ useEffect(()=>{
             <div>{currentQuestion.question}</div>
           </QuestionDiv>
           <AnswersDiv>
-            {shuffledAnswers.map((answer) => {
+            {shuffledAnswers.map((answer, index) => {
               return answer === correctAnswer ? (
-                <CorrectAnswer value={answer}>{answer}</CorrectAnswer>
+                <CorrectAnswer value={answer} key={`correctAnswer-${index}`}>
+                  {answer}
+                </CorrectAnswer>
               ) : (
-                <IncorrectAnswer value={answer}>{answer}</IncorrectAnswer>
+                <IncorrectAnswer value={answer} key={`correctAnswer-${index}`}>
+                  {answer}
+                </IncorrectAnswer>
               );
             })}
           </AnswersDiv>

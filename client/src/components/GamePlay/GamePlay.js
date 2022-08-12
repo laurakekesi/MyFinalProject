@@ -11,12 +11,12 @@ const GamePlay = () => {
   const [triviaQuestions, setTriviaQuestions] = useState(null);
   const [triviaIndex, setTriviaIndex] = useState(null);
   const [gameState, setGameState] = useState("pause");
-  const {setPointsTally} = useContext(Context);
-  const [shuffledAnswers, setShuffledAnswers] = useState([])
+  const { setPointsTally } = useContext(Context);
+  const [shuffledAnswers, setShuffledAnswers] = useState([]);
   const history = useHistory();
-  
+
   //sets the points back to 0 at the beginning of every game.
-  if (gameState === "pause"){
+  if (gameState === "pause") {
     setPointsTally(0);
   }
 
@@ -37,25 +37,24 @@ const GamePlay = () => {
     setTimeout(() => {
       //after 15 seconds, game is set to "result" state for 5 seconds
       //after 5 seconds, if the index is under 19, add a number to index, allowing
-      //the useEffect to repeat all over again but with a new question. 
+      //the useEffect to repeat all over again but with a new question.
       setGameState("result");
       setTimeout(() => {
-          if (triviaIndex < 19 ) {
-          setTriviaIndex(triviaIndex + 1)
+        if (triviaIndex < 19) {
+          setTriviaIndex(triviaIndex + 1);
           //if index is 19, there are no more questions, game state set to game over.
         } else {
-            setGameState("gameOver");
+          setGameState("gameOver");
         }
-      }, 2000)
+      }, 2000);
     }, 1500);
-    
   }, [triviaIndex]);
 
   const createAnswersArray = () => {
     const currentQuestion = triviaQuestions[triviaIndex];
     //incorrect & correct answers are stored in different keys in API, this function
     //puts them all together in one array and jumbles them (so that the correct answer
-    //isn't always the first option) 
+    //isn't always the first option)
     let answersArray = [];
     answersArray.push(currentQuestion.correctAnswer);
     currentQuestion.incorrectAnswers.forEach((answer) =>
@@ -66,59 +65,57 @@ const GamePlay = () => {
       return Math.random() - 0.5;
     });
 
-    setShuffledAnswers([...shuffled])
-
+    setShuffledAnswers([...shuffled]);
   };
 
   //calls the createAnswersArray one time, so both the Play and Result components get the shuffled
   //answers in the same order.
-useEffect(()=>{
-  if (triviaQuestions && triviaIndex >=0) {
-    createAnswersArray();
+  useEffect(() => {
+    if (triviaQuestions && triviaIndex >= 0) {
+      createAnswersArray();
     }
-  
-},[triviaQuestions, triviaIndex])
-  
-if (triviaQuestions && triviaIndex >=0){
-  const currentQuestion = triviaQuestions[triviaIndex];
-  const correctAnswer = currentQuestion.correctAnswer;
-  if (gameState === "play" ) {
-    return (
-      <Wrapper>
-        <Play triviaIndex = {triviaIndex} 
-        shuffledAnswers = {shuffledAnswers}
-        correctAnswer = {correctAnswer}
-        currentQuestion = {currentQuestion}
-        />
-      </Wrapper>
-    );
-  }  
-  if (gameState === "result") {
-    return (
-    <Wrapper>
-      <Result triviaIndex = {triviaIndex} 
-        shuffledAnswers = {shuffledAnswers}
-        correctAnswer = {correctAnswer}
-        currentQuestion = {currentQuestion}
-        />
-    </Wrapper>
-    );
-  }
-  if (gameState === "gameOver") {
-    return(
-      <Wrapper>
-        <GameOver/>
-      </Wrapper>
-    )
-  }
+  }, [triviaQuestions, triviaIndex]);
 
-}
-  else {
+  if (triviaQuestions && triviaIndex >= 0) {
+    const currentQuestion = triviaQuestions[triviaIndex];
+    const correctAnswer = currentQuestion.correctAnswer;
+    if (gameState === "play") {
+      return (
+        <Wrapper>
+          <Play
+            triviaIndex={triviaIndex}
+            shuffledAnswers={shuffledAnswers}
+            correctAnswer={correctAnswer}
+            currentQuestion={currentQuestion}
+          />
+        </Wrapper>
+      );
+    }
+    if (gameState === "result") {
+      return (
+        <Wrapper>
+          <Result
+            triviaIndex={triviaIndex}
+            shuffledAnswers={shuffledAnswers}
+            correctAnswer={correctAnswer}
+            currentQuestion={currentQuestion}
+          />
+        </Wrapper>
+      );
+    }
+    if (gameState === "gameOver") {
+      return (
+        <Wrapper>
+          <GameOver />
+        </Wrapper>
+      );
+    }
+  } else {
     return (
       <Wrapper>
-        <Loading/>
+        <Loading />
       </Wrapper>
-    )
+    );
   }
 };
 

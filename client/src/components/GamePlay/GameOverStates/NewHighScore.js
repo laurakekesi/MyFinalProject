@@ -12,6 +12,9 @@ const NewHighScore = () => {
     history.push("/");
   };
 
+  //if user clicks the post button, they will post a predetermined message regarding their
+  //new achievement. Then, allPosts is reset so that when the button pushes to the home feed,
+  //they will immediately see their new post without having to refresh.
   const postHighScore = () => {
     const userId = loggedInUser._id;
     fetch("/api/posts", {

@@ -17,7 +17,7 @@ const [allPosts, setAllPosts] = useState(null);
 const history = useHistory();
 
 
-const { user: currentUser, isAuthenticated, isLoading } = useAuth0();
+const { user: currentUser, isAuthenticated, } = useAuth0();
 
 //fetches all users and sets allUsers 
 useEffect(() => {

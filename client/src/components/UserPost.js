@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { Context } from "../context/Context";
@@ -6,109 +6,109 @@ import { Context } from "../context/Context";
 const UserPost = ({ post, user }) => {
   const [isHearted, setIsHearted] = useState(false);
   const [isPooed, setIsPooed] = useState(false);
-  const {loggedInUser} = useContext(Context);
+  const { loggedInUser } = useContext(Context);
   const history = useHistory();
 
   if (post && user && loggedInUser) {
     const numHearts = post.numHearts;
     const numPoos = post.numPoos;
 
-//deletes the post using the post id
-    const deletePost = (e)=> {
+    //deletes the post using the post id
+    const deletePost = (e) => {
       e.preventDefault();
       fetch(`/api/post/${post._id}`, {
-        method: "DELETE"
+        method: "DELETE",
       })
-      .then((res) => res.json())
-      .catch((err) => history.push("/error"));
+        .then((res) => res.json())
+        .catch((err) => history.push("/error"));
       window.location.reload();
-    }
-  //increments or decrements hearts on button & in mongo.
-  const heartHandler = (e) => {
-    e.preventDefault();
-    if (isHearted === false) {
-      fetch(`/api/post/incrementHearts/${post._id}`, {
-        method: "PATCH",
-      })
-        .catch((err) => {
-          history.push('/error');
+    };
+    //increments or decrements hearts on button & in mongo.
+    const heartHandler = (e) => {
+      e.preventDefault();
+      if (isHearted === false) {
+        fetch(`/api/post/incrementHearts/${post._id}`, {
+          method: "PATCH",
+        }).catch((err) => {
+          history.push("/error");
         });
-      setIsHearted(true);
-    } else {
-      fetch(`/api/post/decrementHearts/${post._id}`, {
-        method: "PATCH",
-      })
-        .catch((error) => {
-          history.push('/error');
+        setIsHearted(true);
+      } else {
+        fetch(`/api/post/decrementHearts/${post._id}`, {
+          method: "PATCH",
+        }).catch((error) => {
+          history.push("/error");
         });
-      setIsHearted(false);
-    }
-  };
+        setIsHearted(false);
+      }
+    };
 
     //increments or decrements poos on button & in mongo.
     const pooHandler = (e) => {
-        e.preventDefault();
-        if (isPooed === false) {
-          fetch(`/api/post/incrementPoos/${post._id}`, {
-            method: "PATCH",
-          })
-            .then((res) => res.json())
-            .catch((err) => history.push("/error"));
-          setIsPooed(true);
-        } else {
-          fetch(`/api/post/decrementPoos/${post._id}`, {
-            method: "PATCH",
-          })
-            .then((res) => res.json())
+      e.preventDefault();
+      if (isPooed === false) {
+        fetch(`/api/post/incrementPoos/${post._id}`, {
+          method: "PATCH",
+        })
+          .then((res) => res.json())
+          .catch((err) => history.push("/error"));
+        setIsPooed(true);
+      } else {
+        fetch(`/api/post/decrementPoos/${post._id}`, {
+          method: "PATCH",
+        })
+          .then((res) => res.json())
 
-            .catch((err) => history.push("/error"));
-          setIsPooed(false);
-        }
-      };
+          .catch((err) => history.push("/error"));
+        setIsPooed(false);
+      }
+    };
 
-  return (
-    <Wrapper to={`/profile/${post.userId}`}>
-      {user._id === loggedInUser._id? <DeletePost onClick={deletePost}>x</DeletePost>: <DeletePost></DeletePost>}
-      
-      <PersonInfo>
-        <Img src={user.avatarSrc} alt="avatar" />
-        <Column>
-          <Name>
-          
-            <Bold>{user.firstName}</Bold> says:
-          </Name>
-          <Post>{post.postContent}</Post>
-        </Column>
-        
-      </PersonInfo>
+    return (
+      <Wrapper to={`/profile/${post.userId}`}>
+        {user._id === loggedInUser._id ? (
+          <DeletePost onClick={deletePost}>x</DeletePost>
+        ) : (
+          <DeletePost></DeletePost>
+        )}
 
-      <PostStats>
-        <HeartButton onClick={heartHandler}>
-          💖<Number>{isHearted? numHearts + 1 : numHearts}</Number>
-        </HeartButton>
-        <PooButton onClick={pooHandler}>
-          💩<Number>{isPooed? numPoos + 1 : numPoos}</Number>{" "}
-        </PooButton>
-      </PostStats>
-    </Wrapper>
-  );
+        <PersonInfo>
+          <Img src={user.avatarSrc} alt="avatar" />
+          <Column>
+            <Name>
+              <Bold>{user.firstName}</Bold> says:
+            </Name>
+            <Post>{post.postContent}</Post>
+          </Column>
+        </PersonInfo>
+
+        <PostStats>
+          <HeartButton onClick={heartHandler}>
+            💖<Number>{isHearted ? numHearts + 1 : numHearts}</Number>
+          </HeartButton>
+          <PooButton onClick={pooHandler}>
+            💩<Number>{isPooed ? numPoos + 1 : numPoos}</Number>{" "}
+          </PooButton>
+        </PostStats>
+      </Wrapper>
+    );
   }
 };
 
 const DeletePost = styled.button`
-color: grey;
-background: none;
-border: none;
-top: 5;
-margin-left: 580px;
-cursor: pointer;
-position: relative;
-height: 5px;
+  color: grey;
+  background: none;
+  border: none;
+  top: 5;
+  margin-left: 580px;
+  cursor: pointer;
+  position: relative;
+  height: 5px;
 
-&:hover{
-  color: #ff7d9e;
-}
-`
+  &:hover {
+    color: #ff7d9e;
+  }
+`;
 const Column = styled.div`
   display: flex;
   flex-direction: column;

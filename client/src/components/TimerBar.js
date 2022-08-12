@@ -1,12 +1,13 @@
 import styled, { keyframes } from "styled-components";
 
+//timer animation above the trivia question
 const TimerBar = () => {
-    return(
-        <>
-        <BarDiv></BarDiv>
-        </>
-    )
-}
+  return (
+    <>
+      <BarDiv></BarDiv>
+    </>
+  );
+};
 
 const elapse = keyframes`
     from {
@@ -27,9 +28,10 @@ const colourChange = keyframes`
 `;
 
 const BarDiv = styled.div`
-height: 30px;
-border-radius: 15px;
-animation: ${elapse} 15s cubic-bezier(1,.99,0,-0.02), ${colourChange} 15s cubic-bezier(1,.99,0,-0.02);
-`
+  height: 30px;
+  border-radius: 15px;
+  animation: ${elapse} 15s cubic-bezier(1, 0.99, 0, -0.02),
+    ${colourChange} 15s cubic-bezier(1, 0.99, 0, -0.02);
+`;
 
 export default TimerBar;

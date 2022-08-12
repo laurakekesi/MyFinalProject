@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Context } from "../context/Context";
 import Loading from "./Loading";
 import UserPost from "./UserPost";
-import { useHistory } from "react-router-dom"; 
+import { useHistory } from "react-router-dom";
 
 const Homefeed = () => {
   const { loggedInUser, allUsers, allPosts, setAllPosts } = useContext(Context);
@@ -11,25 +11,24 @@ const Homefeed = () => {
 
   const history = useHistory();
 
-
   useEffect(() => {
-    fetch('/api/posts')
-    .then((res) => res.json())
-    .then((data) => {
+    fetch("/api/posts")
+      .then((res) => res.json())
+      .then((data) => {
         setAllPosts(data.data.reverse());
-    })
-    .catch((err) => history.push('/error'))
-}, [])
+      })
+      .catch((err) => history.push("/error"));
+  }, []);
 
-//If there is nothing in the textarea, this function disables the submit button,
-//not allowing the user to post.
+  //If there is nothing in the textarea, this function disables the submit button,
+  //not allowing the user to post.
   const buttonHandler = (e) => {
     if (e.target.value.length > 0) {
-      setIsDisabled(false)
-  } else {
-    setIsDisabled(true)
-  }
-}
+      setIsDisabled(false);
+    } else {
+      setIsDisabled(true);
+    }
+  };
 
   //on submit, passes the logged in user's id, as well as the content of the text
   //area to the body to the backend, then reloads the page so user can see their post.
@@ -55,17 +54,18 @@ const Homefeed = () => {
       <Wrapper>
         <BackgroundDiv>
           <Form onSubmit={submitHandler}>
-            <TextArea placeholder="What's on your mind?" onChange={buttonHandler}></TextArea>
-            <Button disabled={isDisabled}>
-              Post
-            </Button>
+            <TextArea
+              placeholder="What's on your mind?"
+              onChange={buttonHandler}
+            ></TextArea>
+            <Button disabled={isDisabled}>Post</Button>
           </Form>
           <PostContainer>
-            {allPosts.map((post) => {
+            {allPosts.map((post, index) => {
               const user = allUsers.find((user) => user._id === post.userId);
               return (
                 <PostDiv>
-                  <UserPost post={post} user={user} />
+                  <UserPost post={post} user={user} key={`user-${index}`}/>
                 </PostDiv>
               );
             })}
@@ -107,7 +107,7 @@ const Button = styled.button`
   margin-bottom: 10px;
   cursor: pointer;
 
-  &:disabled{
+  &:disabled {
     cursor: not-allowed;
     opacity: 0.7;
     color: lightgray;

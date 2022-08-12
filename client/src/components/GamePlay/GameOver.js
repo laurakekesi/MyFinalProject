@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import styled from "styled-components";
 import { Context } from "../../context/Context";
 import Loading from "../Loading";
@@ -8,8 +8,7 @@ import NewHighScore from "./GameOverStates/NewHighScore";
 import { useHistory } from "react-router-dom";
 
 const GameOver = () => {
-  const { pointsTally, loggedInUser, gameOverState, gameOverHandler } =
-    useContext(Context);
+  const { pointsTally, gameOverState, gameOverHandler } = useContext(Context);
 
   const history = useHistory();
 
@@ -21,9 +20,9 @@ const GameOver = () => {
     history.push("/");
   };
 
-
-gameOverHandler();
-
+  //calls the gameOver func (lives in context) when this page is rendered, which will set
+  //the appropriate gameOverState.
+  gameOverHandler();
 
   //depending on what state the game ends on, a different message will appear, and options to post a
   //predetermined message depending on the user's achievements.
