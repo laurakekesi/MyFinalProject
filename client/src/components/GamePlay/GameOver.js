@@ -23,7 +23,7 @@ const GameOver = () => {
 
 
 gameOverHandler();
-console.log(gameOverState);
+
 
   //depending on what state the game ends on, a different message will appear, and options to post a
   //predetermined message depending on the user's achievements.

@@ -21,7 +21,6 @@ const Profile = () => {
         setUser(data.data);
     })
     .catch((err) => {
-    // console.log("err", err);
     history.push("/error")})
     }, [profileId])
 
@@ -33,7 +32,6 @@ const Profile = () => {
         setUserPosts(data.data);
     })
     .catch((err) => {
-        console.log("err", err);
         history.push("/error")})
     }, [profileId]);
 

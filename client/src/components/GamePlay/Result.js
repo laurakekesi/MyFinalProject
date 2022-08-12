@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Context } from "../../context/Context";
+import { useHistory } from "react-router-dom";
 
 const Result = ({
   triviaIndex,
@@ -9,6 +10,7 @@ const Result = ({
   currentQuestion,
 }) => {
   const { selectedAnswer, pointsTally, setPointsTally, loggedInUser} = useContext(Context);
+  const history = useHistory();
 
   const pointsHandler = () => {
    if (selectedAnswer === correctAnswer){
@@ -41,8 +43,7 @@ useEffect(()=>{
       category: currentQuestion.category
     })})
     .then((res) => res.json())
-    .then((data) => console.log(`${currentQuestion.category} updated`, data))
-    .catch((err) => console.log("Error", err))
+    .catch((err) => history.push("/error"));
   }
 },[triviaIndex,currentQuestion])
 

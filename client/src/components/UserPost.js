@@ -20,7 +20,7 @@ const UserPost = ({ post, user }) => {
         method: "DELETE"
       })
       .then((res) => res.json())
-      .catch((err) => console.log(err))
+      .catch((err) => history.push("/error"));
       window.location.reload();
     }
   //increments or decrements hearts on button & in mongo.
@@ -53,24 +53,15 @@ const UserPost = ({ post, user }) => {
             method: "PATCH",
           })
             .then((res) => res.json())
-            .then((data) => {
-              console.log("Poos incremented!", data);
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
+            .catch((err) => history.push("/error"));
           setIsPooed(true);
         } else {
           fetch(`/api/post/decrementPoos/${post._id}`, {
             method: "PATCH",
           })
             .then((res) => res.json())
-            .then((data) => {
-              console.log("Poos decremented!", data);
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-            });
+
+            .catch((err) => history.push("/error"));
           setIsPooed(false);
         }
       };

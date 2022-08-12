@@ -25,9 +25,7 @@ const NewBoth = () => {
         })
         .then(setIsPosted("Posted!"))
         .then(history.push('/'))
-        // Get home page to reload so posts show?
-        //Get page to actually push?
-        .catch((err) => console.log(err))
+        .catch((err) => history.push("/error"));
 
 
     }

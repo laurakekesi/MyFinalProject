@@ -5,6 +5,7 @@ import Result from "./Result";
 import Loading from "../Loading";
 import { Context } from "../../context/Context";
 import GameOver from "./GameOver";
+import { useHistory } from "react-router-dom";
 
 const GamePlay = () => {
   const [triviaQuestions, setTriviaQuestions] = useState(null);
@@ -12,6 +13,7 @@ const GamePlay = () => {
   const [gameState, setGameState] = useState("pause");
   const {setPointsTally} = useContext(Context);
   const [shuffledAnswers, setShuffledAnswers] = useState([])
+  const history = useHistory();
   
   //sets the points back to 0 at the beginning of every game.
   if (gameState === "pause"){
@@ -26,7 +28,7 @@ const GamePlay = () => {
         //when data is fetched, sets triviaIndex && pointsTally to 0, beginning the game
         setTriviaIndex(0);
       })
-      .catch((err) => console.log("err", err));
+      .catch((err) => history.push("/error"));
   }, []);
 
   useEffect(() => {

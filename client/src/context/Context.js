@@ -19,16 +19,6 @@ const history = useHistory();
 
 const { user: currentUser, isAuthenticated, isLoading } = useAuth0();
 
- //fetches all posts and sets allPosts
-// useEffect(() => {
-//     fetch('/api/posts')
-//     .then((res) => res.json())
-//     .then((data) => {
-//         setAllPosts(data.data.reverse());
-//     })
-//     .catch((err) => console.log("err", err))
-// }, [])
-
 //fetches all users and sets allUsers 
 useEffect(() => {
     fetch('/api/users')
@@ -36,7 +26,7 @@ useEffect(() => {
     .then((data) => {
         setAllUsers(data.data);
     })
-    .catch((err) => console.log("err", err))
+    .catch((err) => history.push("/error"));
 }, [])
 
 //if isAuthenticated, takes the logged in user's email, and puts it in a fetch to get that same user
@@ -48,7 +38,8 @@ useEffect(() => {
     .then((data) => {
         setLoggedInUser(data.data);
     })
-    .catch((err) => console.log("err", err))}
+    .catch((err) => history.push("/error"));
+}
 }, [currentUser])
 
 const gameOverHandler = () => {
@@ -82,8 +73,7 @@ const gameOverHandler = () => {
         })
     })
     .then((res) => res.json())
-    .then((data) => console.log(data))
-    .catch((err) => console.log(err));
+    .catch((err) => history.push("/error"));
     
     //highScore patch
     fetch(`/api/highScore/${loggedInUser._id}`, {
@@ -94,8 +84,7 @@ const gameOverHandler = () => {
         })
     })
     .then((res) => res.json())
-    .then((data) => console.log(data))
-    .catch((err) => console.log(err))
+    .catch((err) => history.push("/error"));
     
     //if the user has only a new high score, the corresponding patch will happen and
     //the gameOverState will be set to "newHighScore"
@@ -109,8 +98,7 @@ const gameOverHandler = () => {
         })
     })
     .then((res) => res.json())
-    .then((data)=> console.log(data))
-    .catch((err) => console.log(err))
+    .catch((err) => history.push("/error"));
     
     //if the user has only a new best subject, the corresponding patch will happen and
     //the gameOverState will be set to "newBestSubject"
@@ -124,8 +112,7 @@ const gameOverHandler = () => {
         })
     })
     .then((res) => res.json)
-    .then((data) => console.log(data))
-    .catch((err) => console.log)
+    .catch((err) => history.push("/error"));
     }
     
     //if none of the above take place, the state will be set to "noNewTops"

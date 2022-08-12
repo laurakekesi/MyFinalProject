@@ -47,8 +47,7 @@ const Homefeed = () => {
         res.json();
         window.location.reload();
       })
-      .catch((err) => console.log(err));
-      // history.push("/error");
+      .catch((err) => history.push("/error"));
   };
 
   if (allPosts && allUsers) {
