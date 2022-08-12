@@ -8,6 +8,17 @@ const UserPost = ({ post, user }) => {
     const [isHearted, setIsHearted] = useState(false);
     const [isPooed, setIsPooed] = useState(false);
 
+//deletes the post using the post id
+    const deletePost = (e)=> {
+      e.preventDefault();
+      fetch(`/api/post/${post._id}`, {
+        method: "DELETE"
+      })
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((err) => console.log(err))
+      window.location.reload();
+    }
   //increments or decrements hearts on button & in mongo.
   const heartHandler = (e) => {
     e.preventDefault();
@@ -70,14 +81,17 @@ const UserPost = ({ post, user }) => {
 
   return (
     <Wrapper to={`/profile/${post.userId}`}>
+      <DeletePost onClick={deletePost}>x</DeletePost>
       <PersonInfo>
         <Img src={user.avatarSrc} alt="avatar" />
         <Column>
           <Name>
+          
             <Bold>{user.firstName}</Bold> says:
           </Name>
           <Post>{post.postContent}</Post>
         </Column>
+        
       </PersonInfo>
 
       <PostStats>
@@ -92,6 +106,20 @@ const UserPost = ({ post, user }) => {
   );
 };
 
+const DeletePost = styled.button`
+color: grey;
+background: none;
+border: none;
+top: 5;
+margin-left: 580px;
+cursor: pointer;
+position: relative;
+height: 5px;
+
+&:hover{
+  color: #ff7d9e;
+}
+`
 const Column = styled.div`
   display: flex;
   flex-direction: column;
@@ -151,6 +179,7 @@ const PersonInfo = styled.div`
   display: flex;
   align-items: center;
   font-family: var(--secondary-font-family);
+  margin-top: -5px;
 `;
 const PostStats = styled.div`
   width: 100%;

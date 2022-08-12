@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useAuth0 } from '@auth0/auth0-react';
+import { useHistory } from "react-router-dom";
 
 export const Context = createContext();
 
@@ -11,6 +12,8 @@ const [pointsTally, setPointsTally] = useState(0);
 const [selectedAnswer, setSelectedAnswer] = useState(null);
 const [shuffledAnswers, setShuffledAnswers] = useState(null);
 const [gameOverState, setGameOverState] = useState(null);
+const [bestSub, setBestSub] = useState("test");
+const history = useHistory();
 
 const { user: currentUser, isAuthenticated, isLoading } = useAuth0();
 
@@ -61,6 +64,7 @@ const gameOverHandler = () => {
         return Object.keys(obj).find(key => obj[key] === value);
     }
     const newBestSubject = getObjKey(correctAnswers, highestValue);
+    setBestSub(newBestSubject);
     
     //if the user has a new best subject and a new high score, both patches will be done
     //and the gameOverState will be updated
@@ -128,10 +132,21 @@ const gameOverHandler = () => {
     }
 
 
+    //used in gameOver components to restart game
+    const reloadPage = () => {
+        window.location.reload();
+    }
+
+    //used in gameOver components to send the user home if they don't want to play again
+    const goHome = () => {
+        history.push('/')
+    }
+
+
     return(
        <Context.Provider value={{ allPosts, setAllPosts, allUsers, currentUser, loggedInUser,
         pointsTally, setPointsTally, selectedAnswer, setSelectedAnswer, shuffledAnswers,
-        setShuffledAnswers, gameOverState, gameOverHandler
+        setShuffledAnswers, gameOverState, gameOverHandler, reloadPage, goHome, bestSub
        }}>
            {children}
        </Context.Provider>
