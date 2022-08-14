@@ -30,14 +30,16 @@ const Navbar = () => {
             </LogoutDiv>
           </div>
         ) : (
-          <div></div>
+          <EmptyDiv></EmptyDiv>
         )}
       </Div>
     </Wrapper>
   );
 };
 
-
+const EmptyDiv = styled.div`
+width: 300px;
+`
 const PlayDiv = styled.div`
   padding-left: 200px;
 `;
