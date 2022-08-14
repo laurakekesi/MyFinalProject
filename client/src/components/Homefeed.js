@@ -85,12 +85,13 @@ const Homefeed = () => {
 const PostContainer = styled.div`
   font-size: 20px;
   margin-top: 30px;
+  /* height: 150px; */
   width: 60%;
 `;
 const PostDiv = styled.div`
   background: rgba(255, 255, 255, 0.7);
   width: 100%;
-  height: 100px;
+ min-height: 100px;
   border-radius: 5px;
   margin-bottom: 10px;
 `;

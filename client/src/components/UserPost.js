@@ -112,6 +112,7 @@ const DeletePost = styled.button`
 const Column = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: 400px;
 `;
 const Bold = styled.span`
   font-weight: bold;
@@ -149,7 +150,6 @@ const PooButton = styled.button`
   }
 `;
 const Post = styled.div`
-  font-size: 18px;
 `;
 const Name = styled.div`
   font-family: var(--secondary-font-family);

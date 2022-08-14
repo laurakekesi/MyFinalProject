@@ -82,7 +82,7 @@ const Profile = () => {
 };
 const PostContainer = styled.div`
   height: 230px;
-  width: 100%;
+  width: 600px;
   overflow: scroll;
   display: flex;
   flex-direction: column;
@@ -90,10 +90,9 @@ const PostContainer = styled.div`
 `;
 const PostDiv = styled.div`
   background: rgba(255, 255, 255, 0.7);
-  width: 50%;
-  height: 100px;
   border-radius: 5px;
   margin-bottom: 10px;
+  padding-bottom: 10px;
 `;
 const Div = styled.div`
   font-size: 30px;
@@ -133,6 +132,7 @@ const PersonInfo = styled.div`
   font-family: var(--secondary-font-family);
   display: flex;
   padding: 30px;
+  justify-content: center;
 `;
 const PostsByPerson = styled.div`
   display: flex;
@@ -140,7 +140,7 @@ const PostsByPerson = styled.div`
   align-items: center;
 `;
 const BackgroundDiv = styled.div`
-  width: 85%;
+  width: 800px;
   height: 85%;
   background: rgba(172, 216, 210, 0.5);
   border-radius: 15px;
