@@ -46,8 +46,8 @@ const GamePlay = () => {
         } else {
           setGameState("gameOver");
         }
-      }, 300);
-    }, 500);
+      }, 3000);
+    }, 15000);
   }, [triviaIndex]);
 
   const createAnswersArray = () => {
