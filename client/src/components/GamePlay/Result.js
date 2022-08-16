@@ -163,8 +163,6 @@ const Wrapper = styled.div`
   height: 90%;
   width: 100%;
 
-  /* added in because of navbar stuff */
-  /* padding-top: 70px; */
 `;
 
 export default Result;
