@@ -1,6 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { useAuth0 } from '@auth0/auth0-react';
 import { useHistory } from "react-router-dom";
+import NewBestSub from "../components/GamePlay/GameOverStates/NewBestSub";
 
 export const Context = createContext();
 
@@ -51,17 +52,17 @@ const gameOverHandler = () => {
     const correctAnswers = loggedInUser.correctAnswers;
     const allValues = Object.values(correctAnswers);
     const setToNum = allValues.map((num) => Number(num));
-    const highestValue = Math.max(...setToNum);
+    const highestValue = Number(Math.max(...setToNum));
     
     const getObjKey = (obj, value) => {
         return Object.keys(obj).find(key => obj[key] === value);
     }
     const newBestSubject = getObjKey(correctAnswers, highestValue);
     setBestSub(newBestSubject);
-    
+
     //if the user has a new best subject and a new high score, both patches will be done
     //and the gameOverState will be updated
-    if (Number(correctAnswers[currentBestSubject]) < highestValue  && pointsTally>currentHighScore){
+    if (Number(correctAnswers[currentBestSubject]) < highestValue && pointsTally>currentHighScore){
     setGameOverState("newBoth");
     //best subject patch
     fetch(`/api/bestSubject/${loggedInUser._id}`, {
@@ -72,7 +73,7 @@ const gameOverHandler = () => {
         })
     })
     .then((res) => res.json())
-    .catch((err) => history.push("/error"));
+    .catch((err) => history.push("/error"))
     
     //highScore patch
     fetch(`/api/highScore/${loggedInUser._id}`, {
@@ -83,7 +84,7 @@ const gameOverHandler = () => {
         })
     })
     .then((res) => res.json())
-    .catch((err) => history.push("/error"));
+    .catch((err) => history.push("/error"))
     
     //if the user has only a new high score, the corresponding patch will happen and
     //the gameOverState will be set to "newHighScore"
@@ -103,7 +104,7 @@ const gameOverHandler = () => {
     //the gameOverState will be set to "newBestSubject"
     } else if (Number(correctAnswers[currentBestSubject]) < highestValue) {
     setGameOverState("newBestSubject")
-        fetch(`/api/bestSubject${loggedInUser._id}`, {
+        fetch(`/api/bestSubject/${loggedInUser._id}`, {
         method: "PATCH",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({
