@@ -14,7 +14,7 @@ const {usersData} = require("./data/users");
 
 const batchImport = async () => {
     try {
-        const client = new MongoClient("mongodb+srv://laurakekesi:myFinalProject83@cluster0.wdcnapi.mongodb.net/myFinalProject?retryWrites=true&w=majority", options);
+        const client = new MongoClient(MONGO_URI, options);
         await client.connect();
         const db = client.db("myFinalProject");
         //inserting all posts into corresponding collection
